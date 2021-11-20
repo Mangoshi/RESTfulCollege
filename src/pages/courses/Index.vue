@@ -1,13 +1,23 @@
 <template>
-	<v-col>
-		<h2>Welcome to the Courses Index page</h2>
-		<p
-		v-for="course in courses"
-		:key="course.id" 
-		>
-		<router-link :to="{ name: 'courses_show', params:{ id: course.id }}"> {{ course.title }} </router-link>
-		</p>
-	</v-col>
+	<div>
+		<h2 class="centered">Welcome to the Courses Index page</h2>
+		<v-container>
+			<v-row>
+				<v-col
+				v-for="course in courses"
+				:key="course.id" 
+				cols="12"
+				sm="4">
+					<v-card
+					elevation="2"
+					outlined
+					shaped>
+						<router-link :to="{ name: 'courses_show', params:{ id: course.id }}"> {{ course.title }} </router-link>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-container>
+	</div>
 </template>
 
 <script>

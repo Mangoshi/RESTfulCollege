@@ -3,27 +3,37 @@
 		<v-app>
 
 			<v-navigation-drawer v-model="drawer" app>
+				<v-list>
 
-				<v-list-item>
-					<router-link to="/">Home</router-link>
-				</v-list-item>
+					<v-list-item class="d-flex justify-center">
+						<v-list-item-avatar 
+							color="success" 
+							class="white--text"
+						>
+							ABC
+						</v-list-item-avatar>
+					</v-list-item>
 
-				<v-list-item>
-					<router-link :to="{name: 'courses_index'}">Courses</router-link>
-				</v-list-item>
+					<v-list-item>
+						<router-link to="/">Home</router-link>
+					</v-list-item>
 
-				<v-list-item>
-					<router-link :to="{name: 'enrolments_index'}">Enrolments</router-link>
-				</v-list-item>
+					<v-list-item>
+						<router-link :to="{name: 'courses_index'}">Courses</router-link>
+					</v-list-item>
 
-				<v-list-item>
-					<router-link :to="{name: 'lecturers_index'}">Lecturers</router-link>
-				</v-list-item>
-
+					<v-list-item>
+						<router-link :to="{name: 'enrolments_index'}">Enrolments</router-link>
+					</v-list-item>
+					
+					<v-list-item>
+						<router-link :to="{name: 'lecturers_index'}">Lecturers</router-link>
+					</v-list-item>
+				</v-list>
 			</v-navigation-drawer>
 
 			<v-app-bar app>
-				<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+				<v-app-bar-nav-icon v-if="loggedIn" @click="drawer = !drawer"></v-app-bar-nav-icon>
 				<v-toolbar-title>RESTful College</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<v-switch 
@@ -48,6 +58,7 @@
 
 <script>
 import MyFooter from "@/components/MyFooter.vue"
+import { mapState } from 'vuex'
 
 export default {
 	name: "App",
@@ -68,6 +79,7 @@ export default {
 	methods:{
 		logout(){
 			this.$store.dispatch('logout')
+			this.$router.replace("/")
 		},
 		toggleDarkMode: function () {
 			this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
@@ -77,7 +89,9 @@ export default {
 	computed: {
 		switchLabel: function () {
 			return this.darkMode ? 'on' : 'off';
-		}
+		},
+		// so I can hide the sidebar when logged out
+		...mapState(['loggedIn'])
 	}
 };
 </script>
