@@ -1,5 +1,5 @@
 <template>
-	<v-banner>
+	<v-container>
 		<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
 		<div v-if="!loggedIn">
 			<v-row>
@@ -19,7 +19,7 @@
 		<p v-else class="centered">
 			You are logged in.
 		</p>
-	</v-banner>
+	</v-container>
 </template>
 
 <script>

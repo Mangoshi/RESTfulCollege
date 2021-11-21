@@ -1,18 +1,54 @@
 <template>
-	<v-col>
-		<h2>Welcome to the Enrolments Index page</h2>
-		<ol>
-			<li
-			v-for="enrolment in enrolments"
-			:key="enrolment.id" 
-			>
-				<router-link :to="{ name: 'Enrolment Viewer', params:{ id: enrolment.id }}"> {{ "Enrolment "+enrolment.id }} </router-link>
-				<p>Course: {{ enrolment.course.title +" ("+enrolment.course.code+")"}}</p>
-				<p>Lecturer: {{ enrolment.lecturer.name +" ("+enrolment.lecturer.email+")"}}</p>
-				<p>Enrolment made: {{ enrolment.date +" ("+enrolment.time+")"}}</p>
-			</li>
-		</ol>
-	</v-col>
+	<v-container fluid>
+		<v-switch
+			v-model="singleExpand"
+			label="Expand Single Item"
+		></v-switch>
+		<v-data-iterator
+			:items="enrolments"
+			item-key="id"
+			:items-per-page="12"
+			:single-expand="singleExpand"
+			hide-default-footer
+		>
+			<template v-slot:default="{ items, isExpanded, expand }">
+			<v-row>
+				<v-col
+				v-for="item in items"
+				:key="item.id"
+				cols="12"
+				sm="6"
+				md="4"
+				lg="3"
+				>
+				<v-card>
+					<v-card-title>
+					<h4>{{ item.course.title }}</h4>
+					</v-card-title>
+					<v-switch
+					:input-value="isExpanded(item)"
+					:label="isExpanded(item) ? 'Expanded' : 'Closed'"
+					class="pl-4 mt-0"
+					@change="(v) => expand(item, v)"
+					></v-switch>
+					<v-divider></v-divider>
+					<v-list
+					v-if="isExpanded(item)"
+					dense
+					>
+					<v-list-item>
+						<v-list-item-content>Course ID:</v-list-item-content>
+						<v-list-item-content class="align-end">
+						{{ item.course_id }}
+						</v-list-item-content>
+					</v-list-item>
+					</v-list>
+				</v-card>
+				</v-col>
+			</v-row>
+			</template>
+		</v-data-iterator>
+	</v-container>
 </template>
 
 <script>
@@ -25,6 +61,7 @@ export default {
 	},
 	data(){
 		return{
+			singleExpand: false,
 			enrolments: []
 		}
 	},
