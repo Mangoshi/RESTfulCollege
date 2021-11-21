@@ -33,11 +33,11 @@ export default {
 					}
 				})
 				.then(response => {
-						console.log("Courses index response:", response.data.data)
+						console.log("getData() response: ", response.data.data)
 						this.course = response.data.data
 					}
 				)
-				.catch(error => console.log("Courses index error caught:", error))
+				.catch(error => console.log("getData() error caught: ", error))
 		}
 	}
 };

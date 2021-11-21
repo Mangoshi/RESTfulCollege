@@ -18,8 +18,8 @@ export default new Vuetify({
             error: '#FF0000',
           },
           dark: {
-            primary: colors.yellow.darken1,
-            secondary: colors.yellow.darken3,
+            primary: colors.yellow.darken3,
+            secondary: colors.yellow.darken1,
             accent: colors.deepOrange.base,
             info: '#00FFFF',
             warning: '#FFD600',

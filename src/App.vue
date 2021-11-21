@@ -33,15 +33,21 @@
 			</v-navigation-drawer>
 
 			<v-app-bar app>
-				<v-app-bar-nav-icon v-if="loggedIn" @click="drawer = !drawer"></v-app-bar-nav-icon>
-				<v-toolbar-title>RESTful College</v-toolbar-title>
-				<v-spacer></v-spacer>
-				<v-switch 
-					:value="darkMode" 
-					@change="toggleDarkMode" 
-					:label="`dark mode: ${switchLabel}`">
-				</v-switch>
-				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn secondary">Log Out</v-btn>
+						<v-app-bar-nav-icon v-if="loggedIn" @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+						<v-spacer></v-spacer>
+
+						<v-toolbar-title>RESTful College</v-toolbar-title>
+
+						<v-spacer></v-spacer>
+
+						<v-switch 
+							:value="darkMode" 
+							@change="toggleDarkMode" 
+							:label="`dark mode: ${switchLabel}`"
+							class="mt-5 mr-5">
+						</v-switch>
+						<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn primary">Log Out</v-btn>
 			</v-app-bar>
 
 			<v-main>

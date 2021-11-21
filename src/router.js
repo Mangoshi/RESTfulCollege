@@ -11,7 +11,7 @@ export default new Router({
 		//// HOME ////
 		{
 			path: "/",
-			name: "home",
+			name: "Home",
 			component: Home
 		},
 		//// COURSES ////
@@ -25,6 +25,11 @@ export default new Router({
 			path: "/courses/:id",
 			name: "courses_show",
 			component: () => import("./pages/courses/Show.vue")
+		},
+		{
+			path: "/courses/edit/:id",
+			name: "courses_edit",
+			component: () => import("./pages/courses/Edit.vue")
 		},
 		//// ENROLMENTS ////
 		{
