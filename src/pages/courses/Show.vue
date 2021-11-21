@@ -1,9 +1,9 @@
 <template>
-	<b-col>
+	<v-col>
 		<h2>{{ course.title }} [{{ course.code }}]</h2>
 		<hr>
 		<p>{{ course.description }}</p>
-	</b-col>
+	</v-col>
 </template>
 
 <script>

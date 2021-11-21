@@ -5,7 +5,7 @@
 		v-for="lecturer in lecturers"
 		:key="lecturer.id" 
 		>
-		<router-link :to="{ name: 'lecturers_show', params:{ id: lecturer.id }}"> {{ lecturer.name }} </router-link>
+		<router-link :to="{ name: 'Lecturer Viewer', params:{ id: lecturer.id }}"> {{ lecturer.name }} </router-link>
 		</p>
 	</v-col>
 </template>
@@ -37,11 +37,11 @@ export default {
 					}
 				})
 				.then(response => {
-						console.log("Lecturers index response:", response.data.data)
+						console.log("getData() response: ", response.data.data)
 						this.lecturers = response.data.data
 					}
 				)
-				.catch(error => console.log("Lecturers index error caught:", error))
+				.catch(error => console.log("getData() error caught: ", error))
 		}
 	}
 };

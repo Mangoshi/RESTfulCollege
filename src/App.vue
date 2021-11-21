@@ -19,15 +19,15 @@
 					</v-list-item>
 
 					<v-list-item>
-						<router-link :to="{name: 'courses_index'}">Courses</router-link>
+						<router-link :to="{name: 'All Courses'}">Courses</router-link>
 					</v-list-item>
 
 					<v-list-item>
-						<router-link :to="{name: 'enrolments_index'}">Enrolments</router-link>
+						<router-link :to="{name: 'All Enrolments'}">Enrolments</router-link>
 					</v-list-item>
 					
 					<v-list-item>
-						<router-link :to="{name: 'lecturers_index'}">Lecturers</router-link>
+						<router-link :to="{name: 'All Lecturers'}">Lecturers</router-link>
 					</v-list-item>
 				</v-list>
 			</v-navigation-drawer>
@@ -37,7 +37,7 @@
 
 						<v-spacer></v-spacer>
 
-						<v-toolbar-title>RESTful College</v-toolbar-title>
+						<v-toolbar-title>RESTful College ({{ currentRouteName }})</v-toolbar-title>
 
 						<v-spacer></v-spacer>
 
@@ -96,8 +96,11 @@ export default {
 		switchLabel: function () {
 			return this.darkMode ? 'on' : 'off';
 		},
+		currentRouteName() {
+			return this.$route.name;
+		},
 		// so I can hide the sidebar when logged out
-		...mapState(['loggedIn'])
+		...mapState(['loggedIn']),
 	}
 };
 </script>

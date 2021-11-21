@@ -1,9 +1,9 @@
 <template>
-	<b-col>
+	<v-col>
 		<h2>{{ enrolment.course.title }} [{{ "ID: " + enrolment.id }}]</h2>
 		<hr>
-		<p>{{ enrolment.description }}</p>
-	</b-col>
+		<p>{{ "Date: " + enrolment.date + " Time: " + enrolment.time }}</p>
+	</v-col>
 </template>
 
 <script>
@@ -33,11 +33,11 @@ export default {
 					}
 				})
 				.then(response => {
-						console.log("Enrolments index response:", response.data.data)
+						console.log("getData() response: ", response.data.data)
 						this.enrolment = response.data.data
 					}
 				)
-				.catch(error => console.log("Enrolments index error caught:", error))
+				.catch(error => console.log("getData() error caught: ", error))
 		}
 	}
 };

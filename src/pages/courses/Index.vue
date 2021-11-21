@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h2 class="centered">Welcome to the Courses Index page</h2>
 		<v-container>
 			<v-row>
 				<v-col
@@ -15,7 +14,7 @@
 						:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
 						height="200px"
 						></v-img>
-						<router-link :to="{ name: 'courses_show', params:{ id: course.id }}"> {{ course.title }} </router-link>
+						<router-link :to="{ name: 'Course Viewer', params:{ id: course.id }}"> {{ course.title }} </router-link>
 						<v-item-group class="d-flex">
 							<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="viewCourse(course)">View</v-btn>
 							<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="editCourse(course)">Edit</v-btn>
@@ -63,7 +62,7 @@ export default {
 		},
 		viewCourse(course){
 			this.$router.push({
-				name: 'courses_show',
+				name: 'Course Viewer',
 				params:{ 
 					id: course.id 
 				},
@@ -71,7 +70,7 @@ export default {
 		},
 		editCourse(course){
 			this.$router.push({
-				name: 'courses_edit',
+				name: 'Course Editor',
 				params:{ 
 					id: course.id 
 				},

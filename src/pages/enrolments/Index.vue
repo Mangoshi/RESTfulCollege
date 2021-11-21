@@ -6,7 +6,7 @@
 			v-for="enrolment in enrolments"
 			:key="enrolment.id" 
 			>
-				<router-link :to="{ name: 'enrolments_show', params:{ id: enrolment.id }}"> {{ "Enrolment "+enrolment.id }} </router-link>
+				<router-link :to="{ name: 'Enrolment Viewer', params:{ id: enrolment.id }}"> {{ "Enrolment "+enrolment.id }} </router-link>
 				<p>Course: {{ enrolment.course.title +" ("+enrolment.course.code+")"}}</p>
 				<p>Lecturer: {{ enrolment.lecturer.name +" ("+enrolment.lecturer.email+")"}}</p>
 				<p>Enrolment made: {{ enrolment.date +" ("+enrolment.time+")"}}</p>
@@ -42,11 +42,11 @@ export default {
 					}
 				})
 				.then(response => {
-						console.log("Enrolments index response:", response.data.data)
+						console.log("getData() response: ", response.data.data)
 						this.enrolments = response.data.data
 					}
 				)
-				.catch(error => console.log("Enrolments index error caught:", error))
+				.catch(error => console.log("getData() error caught: ", error))
 		}
 	}
 };

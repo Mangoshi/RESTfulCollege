@@ -1,11 +1,11 @@
 <template>
-	<b-col>
+	<v-col>
 		<h2>{{ lecturer.name }} [{{ "ID: " + lecturer.id }}]</h2>
 		<hr>
 		<p>Email: {{ lecturer.email }}</p>
 		<p>Phone: {{ lecturer.phone }}</p>
 		<p>Address: {{ lecturer.address }}</p>
-	</b-col>
+	</v-col>
 </template>
 
 <script>
@@ -35,11 +35,11 @@ export default {
 					}
 				})
 				.then(response => {
-						console.log("Lecturers index response:", response.data.data)
+						console.log("getData() response: ", response.data.data)
 						this.lecturer = response.data.data
 					}
 				)
-				.catch(error => console.log("Lecturers index error caught:", error))
+				.catch(error => console.log("getData() error caught: ", error))
 		}
 	}
 };

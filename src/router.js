@@ -17,40 +17,40 @@ export default new Router({
 		//// COURSES ////
 		{
 			path: "/courses",
-			name: "courses_index",
+			name: "All Courses",
 			// This is lazy-loading syntax to import the Component
 			component: () => import("./pages/courses/Index.vue")
 		},
 		{
 			path: "/courses/:id",
-			name: "courses_show",
+			name: "Course Viewer",
 			component: () => import("./pages/courses/Show.vue")
 		},
 		{
 			path: "/courses/edit/:id",
-			name: "courses_edit",
+			name: "Course Editor",
 			component: () => import("./pages/courses/Edit.vue")
 		},
 		//// ENROLMENTS ////
 		{
 			path: "/enrolments",
-			name: "enrolments_index",
+			name: "All Enrolments",
 			component: () => import("./pages/enrolments/Index.vue")
 		},
 		{
 			path: "/enrolments/:id",
-			name: "enrolments_show",
+			name: "Enrolment Viewer",
 			component: () => import("./pages/enrolments/Show.vue")
 		},
 		//// LECTURERS ////
 		{
 			path: "/lecturers",
-			name: "lecturers_index",
+			name: "All Lecturers",
 			component: () => import("./pages/lecturers/Index.vue")
 		},
 		{
 			path: "/lecturers/:id",
-			name: "lecturers_show",
+			name: "Lecturer Viewer",
 			component: () => import("./pages/lecturers/Show.vue")
 		},
 	]
