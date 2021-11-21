@@ -1,53 +1,55 @@
 <template>
 	<div>
-		<v-app>
+		<v-app class="spacemono">
 
-			<v-navigation-drawer v-model="drawer" app>
+			<v-navigation-drawer v-model="drawer" app permanent expand-on-hover>
 				<v-list>
 
-					<v-list-item class="d-flex justify-center">
+					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
-							color="success" 
-							class="white--text"
-						>
-							ABC
+							color="primary" 
+							class="accent--text">
+							X_X
 						</v-list-item-avatar>
 					</v-list-item>
 
-					<v-list-item>
-						<router-link to="/">Home</router-link>
+					<v-list-item class="mb-10">
+						<router-link to="/"><v-icon>mdi-home</v-icon></router-link>&nbsp;
+						<router-link to="/" class="sideLink">Home</router-link>
 					</v-list-item>
 
-					<v-list-item>
-						<router-link :to="{name: 'All Courses'}">Courses</router-link>
+					<v-list-item class="mb-10">
+						<router-link :to="{name: 'All Courses'}"><v-icon>mdi-school</v-icon></router-link>&nbsp;
+						<router-link :to="{name: 'All Courses'}" class="sideLink">Courses</router-link>
 					</v-list-item>
 
-					<v-list-item>
-						<router-link :to="{name: 'All Enrolments'}">Enrolments</router-link>
+					<v-list-item class="mb-10">
+						<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
+						<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
 					</v-list-item>
 					
-					<v-list-item>
-						<router-link :to="{name: 'All Lecturers'}">Lecturers</router-link>
+					<v-list-item class="mb-10">
+						<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
+						<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
 					</v-list-item>
+
 				</v-list>
 			</v-navigation-drawer>
 
 			<v-app-bar app>
-						<v-app-bar-nav-icon v-if="loggedIn" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-						<v-spacer></v-spacer>
+				<v-toolbar-title class="navTitle">
+					<span class="rc1">REST</span><span class="rc2">ful</span> College<span class="rc3">&nbsp;(&nbsp;{{ currentRouteName }}&nbsp;)</span>
+				</v-toolbar-title>
 
-						<v-toolbar-title>RESTful College ({{ currentRouteName }})</v-toolbar-title>
-
-						<v-spacer></v-spacer>
-
-						<v-switch 
-							:value="darkMode" 
-							@change="toggleDarkMode" 
-							:label="`dark mode: ${switchLabel}`"
-							class="mt-5 mr-5">
-						</v-switch>
-						<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn primary">Log Out</v-btn>
+				<v-spacer></v-spacer>
+				<v-switch 
+					:value="darkMode" 
+					@change="toggleDarkMode" 
+					:label="`dark mode: ${switchLabel}`"
+					class="mt-5 mr-5">
+				</v-switch>
+				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn primary">Log Out</v-btn>
 			</v-app-bar>
 
 			<v-main>
@@ -66,10 +68,10 @@
 import MyFooter from "@/components/MyFooter.vue"
 import { mapState } from 'vuex'
 
+
 export default {
 	name: "App",
 	data: () => ({ 
-		drawer: null, 
 		darkMode: false
 	}),
 	components: {
@@ -106,10 +108,39 @@ export default {
 </script>
 
 <style>
+	.spacemono{
+		font-family: 'Space Mono', monospace !important;
+	}
+	.spacemono-bold{
+		font-family: 'Space Mono', monospace !important;
+		font-weight: 700;
+	}
+	.router-link-exact-active *{
+        color: aqua !important;
+    }
+	.router-link-exact-active {
+        color: aqua !important;
+    }
+	.navTitle{
+		font-size: 1.5em !important;
+		user-select: none;
+		text-align: left;
+		margin-left: 10px;
+	}
 	.rc1:hover{
 		text-decoration: underline;
 	}
 	.rc2{
 		font-size: 85%;
+	}
+	.rc3{
+		font-size: 75%;
+	}
+	.sideLink{
+		font-size: 1.3em !important;
+		text-decoration: none;
+	}
+	.sideLink:hover{
+		text-decoration: underline;
 	}
 </style>
