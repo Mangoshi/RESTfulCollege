@@ -14,8 +14,7 @@
 						:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
 						height="200px"
 						></v-img>
-						<router-link :to="{ name: 'Course Viewer', params:{ id: course.id }}"> {{ course.title }} </router-link>
-						<v-item-group class="d-flex">
+						<v-item-group class="d-flex justify-space-between btnGroup pa-2">
 							<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="viewCourse(course)">View</v-btn>
 							<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="editCourse(course)">Edit</v-btn>
 							<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="deleteCourse(course)">Delete</v-btn>
@@ -87,6 +86,9 @@ export default {
 <!--#00FFFF #FFD600 #FF0000-->
 
 <style>
+	.btnGroup{
+		background-color: black;
+	}
 	.viewBtn{
 		color: #00FFFF !important;
 		border-color: #00FFFF !important;
