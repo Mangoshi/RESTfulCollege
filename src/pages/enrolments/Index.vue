@@ -14,27 +14,27 @@
 			<template v-slot:default="{ items, isExpanded, expand }">
 			<v-row>
 				<v-col
-				v-for="item in items"
-				:key="item.id"
-				cols="12"
-				sm="6"
-				md="4"
-				lg="3"
+					v-for="item in items"
+					:key="item.id"
+					cols="12"
+					sm="6"
+					md="4"
+					lg="3"
 				>
 				<v-card>
 					<v-card-title>
 					<h4>{{ item.course.title }}</h4>
 					</v-card-title>
 					<v-switch
-					:input-value="isExpanded(item)"
-					:label="isExpanded(item) ? 'Expanded' : 'Closed'"
-					class="pl-4 mt-0"
-					@change="(v) => expand(item, v)"
+						:input-value="isExpanded(item)"
+						:label="isExpanded(item) ? 'Expanded' : 'Closed'"
+						class="pl-4 mt-0"
+						@change="(v) => expand(item, v)"
 					></v-switch>
 					<v-divider></v-divider>
 					<v-list
-					v-if="isExpanded(item)"
-					dense
+						v-if="isExpanded(item)"
+						dense
 					>
 					<v-list-item>
 						<v-list-item-content>Course ID:</v-list-item-content>

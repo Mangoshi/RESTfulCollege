@@ -10,17 +10,17 @@ export default new Vuetify({
   theme: {
       themes: {
         light: {
-          primary: colors.deepPurple.darken4,
-          secondary: colors.deepPurple.darken1,
-          accent: colors.deepPurple.base,
+          primary: '#000',
+          secondary: '#fff',
+          accent: colors.pink.lighten2,
           info: '#00FFFF',
           warning: '#FFD600',
           error: '#FF0000',
         },
         dark: {
-          primary: colors.yellow.darken3,
-          secondary: colors.yellow.darken1,
-          accent: colors.deepOrange.base,
+          primary: '#fff',
+          secondary: '#000',
+          accent: colors.orange.base,
           info: '#00FFFF',
           warning: '#FFD600',
           error: '#FF0000',

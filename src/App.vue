@@ -2,61 +2,81 @@
 	<div>
 		<v-app class="spacemono">
 
-			<v-navigation-drawer v-model="drawer" app permanent expand-on-hover>
-				<v-list>
+			<!-- Side Bar -->
 
+			<v-navigation-drawer 
+			v-model="drawer" 
+			app 
+			permanent 
+			expand-on-hover
+			color="secondary"
+			>
+				<v-list shaped>
 					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
 							color="primary" 
-							class="accent--text">
+							class="secondary--text">
 							X_X
 						</v-list-item-avatar>
 					</v-list-item>
+					<v-list-item-group
+						v-model="selectedItem"
+						color="primary">
+						<v-list-item class="mb-10">
+							<router-link to="/"><v-icon>mdi-home</v-icon></router-link>&nbsp;
+							<router-link to="/" class="sideLink">Home</router-link>
+						</v-list-item>
 
-					<v-list-item class="mb-10">
-						<router-link to="/"><v-icon>mdi-home</v-icon></router-link>&nbsp;
-						<router-link to="/" class="sideLink">Home</router-link>
-					</v-list-item>
+						<v-list-item class="mb-10">
+							<router-link :to="{name: 'All Courses'}"><v-icon>mdi-school</v-icon></router-link>&nbsp;
+							<router-link :to="{name: 'All Courses'}" class="sideLink">Courses</router-link>
+						</v-list-item>
 
-					<v-list-item class="mb-10">
-						<router-link :to="{name: 'All Courses'}"><v-icon>mdi-school</v-icon></router-link>&nbsp;
-						<router-link :to="{name: 'All Courses'}" class="sideLink">Courses</router-link>
-					</v-list-item>
-
-					<v-list-item class="mb-10">
-						<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
-						<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
-					</v-list-item>
-					
-					<v-list-item class="mb-10">
-						<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
-						<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
-					</v-list-item>
-
+						<v-list-item class="mb-10">
+							<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
+							<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
+						</v-list-item>
+						
+						<v-list-item class="mb-10">
+							<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
+							<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
+						</v-list-item>
+					</v-list-item-group>
 				</v-list>
 			</v-navigation-drawer>
 
-			<v-app-bar app>
+			<!-- Navigation Bar -->
 
+			<v-app-bar 
+			app
+			color="secondary"
+			class="primary--text"
+			>
 				<v-toolbar-title class="navTitle">
 					<span class="rc1">REST</span><span class="rc2">ful</span> College<span class="rc3">&nbsp;(&nbsp;{{ currentRouteName }}&nbsp;)</span>
 				</v-toolbar-title>
 
 				<v-spacer></v-spacer>
+				
+				<label for="v-switch" class="mr-5">dark mode: {{ switchLabel }}</label>
 				<v-switch 
 					:value="darkMode" 
-					@change="toggleDarkMode" 
-					:label="`dark mode: ${switchLabel}`"
+					@change="toggleDarkMode"
 					class="mt-5 mr-5">
 				</v-switch>
-				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn primary">Log Out</v-btn>
+			
+				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn accent black--text">Log Out</v-btn>
 			</v-app-bar>
+
+			<!-- Router View -->
 
 			<v-main>
 				<v-container fluid>
 					<router-view></router-view>
 				</v-container>
 			</v-main>
+
+			<!-- Footer -->
 
 			<MyFooter />
 
@@ -72,7 +92,8 @@ import { mapState } from 'vuex'
 export default {
 	name: "App",
 	data: () => ({ 
-		darkMode: false
+		darkMode: false,
+		selectedItem: 0
 	}),
 	components: {
 		MyFooter,
@@ -116,10 +137,10 @@ export default {
 		font-weight: 700;
 	}
 	.router-link-exact-active *{
-        color: aqua !important;
+        color: deeppink !important;
     }
 	.router-link-exact-active {
-        color: aqua !important;
+        color: deeppink !important;
     }
 	.navTitle{
 		font-size: 1.5em !important;

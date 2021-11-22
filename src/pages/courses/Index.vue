@@ -9,7 +9,8 @@
 				sm="4">
 					<v-card
 					elevation="2"
-					outlined>
+					outlined
+					color="secondary">
 						<v-img
 						:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
 						height="200px"
@@ -86,9 +87,7 @@ export default {
 <!--#00FFFF #FFD600 #FF0000-->
 
 <style>
-	.btnGroup{
-		background-color: black;
-	}
+
 	.viewBtn{
 		color: #00FFFF !important;
 		border-color: #00FFFF !important;

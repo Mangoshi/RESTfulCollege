@@ -43,7 +43,7 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="primary" class="white--text">
+					<v-btn block color="accent" class="black--text">
 						Submit
 					</v-btn>
 				</v-col>
