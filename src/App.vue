@@ -92,8 +92,7 @@ import { mapState } from 'vuex'
 export default {
 	name: "App",
 	data: () => ({ 
-		darkMode: false,
-		selectedItem: 0
+		darkMode: false
 	}),
 	components: {
 		MyFooter,

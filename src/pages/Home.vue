@@ -16,9 +16,17 @@
 				<v-col></v-col>
 			</v-row>
 		</div>
-		<p v-else class="centered">
-			You are logged in.
-		</p>
+		<div v-else>
+			<div class="centered">
+				{{ currentDate }}
+			</div>
+			<div class="centered">
+				{{ currentTime }}
+			</div>
+			<p class="centered mt-5">
+				You are logged in.
+			</p>
+		</div>
 	</v-container>
 </template>
 
@@ -32,16 +40,36 @@ export default {
 		return{
 			form: {
 				email: "",
-				password: ""
-			}
+				password: "",
+				
+			},
+			currentTime: "",
+			currentDate: "",
+		}
+	},
+	created() {
+		setInterval(this.getNow, 1000);
+	},
+	methods: {
+		...mapActions(['login']),
+		getNow: function() {
+			const today = new Date();
+			this.minutes = this.checkSingleDigit(today.getMinutes())
+			this.seconds = this.checkSingleDigit(today.getSeconds())
+
+			const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			const time = today.getHours() + ":" + this.minutes + ":" + this.seconds;
+
+			this.currentDate = date;
+			this.currentTime = time;
+		},
+		checkSingleDigit(digit){
+			return ('0' + digit).slice(-2)
 		}
 	},
 	computed: {
-		...mapState(['loggedIn'])
+		...mapState(['loggedIn']),
 	},
-	methods: {
-		...mapActions(['login'])
-	}
 };
 </script>
 
