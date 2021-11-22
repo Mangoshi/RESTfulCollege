@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-app class="spacemono">
+		<v-app class="spacemono" :style="cssProps">
 
 			<!-- Side Bar -->
 
@@ -123,6 +123,20 @@ export default {
 		},
 		// so I can hide the sidebar when logged out
 		...mapState(['loggedIn']),
+
+		cssProps () {
+			var themeColors = {}
+			if(this.darkMode === false){
+				Object.keys(this.$vuetify.theme.themes.light).forEach((color) => {
+					themeColors[`--v-${color}`] = this.$vuetify.theme.themes.light[color]
+			})
+			} else {
+				Object.keys(this.$vuetify.theme.themes.dark).forEach((color) => {
+					themeColors[`--v-${color}`] = this.$vuetify.theme.themes.dark[color]
+				})
+			}
+			return themeColors
+		}
 	}
 };
 </script>
@@ -136,10 +150,10 @@ export default {
 		font-weight: 700;
 	}
 	.router-link-exact-active *{
-        color: deeppink !important;
+        color: var(--v-accent) !important;
     }
 	.router-link-exact-active {
-        color: deeppink !important;
+        color: var(--v-accent) !important;
     }
 	.navTitle{
 		font-size: 1.5em !important;
