@@ -11,7 +11,7 @@
 			expand-on-hover
 			color="secondary"
 			>
-				<v-list shaped>
+				<v-list >
 					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
 							color="primary" 
@@ -22,22 +22,23 @@
 					<v-list-item-group
 						v-model="selectedItem"
 						color="primary">
-						<v-list-item class="mb-10">
+
+						<v-list-item class="mb-10" to="/">
 							<router-link to="/"><v-icon>mdi-home</v-icon></router-link>&nbsp;
 							<router-link to="/" class="sideLink">Home</router-link>
 						</v-list-item>
 
-						<v-list-item class="mb-10">
+						<v-list-item class="mb-10" :to="{name: 'All Courses'}">
 							<router-link :to="{name: 'All Courses'}"><v-icon>mdi-school</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Courses'}" class="sideLink">Courses</router-link>
 						</v-list-item>
 
-						<v-list-item class="mb-10">
+						<v-list-item class="mb-10" :to="{name: 'All Enrolments'}">
 							<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
 						</v-list-item>
 						
-						<v-list-item class="mb-10">
+						<v-list-item class="mb-10" :to="{name: 'All Lecturers'}">
 							<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
 						</v-list-item>

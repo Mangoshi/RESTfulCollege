@@ -1,9 +1,50 @@
 <template>
-	<v-col>
-		<h2>{{ course.title }} [{{ course.code }}]</h2>
-		<hr>
-		<p>{{ course.description }}</p>
-	</v-col>
+	<v-container>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="course.title"
+						color="accent"
+						label="Title"
+						readonly
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="course.code"
+						color="accent"
+						label="Code"
+						readonly
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="course.level"
+						color="accent"
+						label="Level"
+						readonly
+						type="number"
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="course.points"
+						color="accent"
+						label="Points Required"
+						readonly
+						type="number"
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="12">
+					<v-textarea
+						v-model="course.description"
+						color="accent"
+						label="Description"
+						readonly
+					></v-textarea>
+				</v-col>
+			</v-row>
+	</v-container>
 </template>
 
 <script>

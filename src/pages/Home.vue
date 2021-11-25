@@ -6,11 +6,11 @@
 				<v-col></v-col>
 				<v-col class="col-3">
 					<v-card class="pa-5">
-					<v-text-field type="email" v-model="form.email" placeholder="email" />
+					<v-text-field color="accent" type="email" v-model="form.email" placeholder="email" />
 					<br>
-					<v-text-field type="password" v-model="form.password" placeholder="password" />
+					<v-text-field color="accent" type="password" v-model="form.password" placeholder="password" />
 					<br>
-					<v-btn @click="login(form)">Login</v-btn>
+					<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
 					</v-card>
 				</v-col>
 				<v-col></v-col>
