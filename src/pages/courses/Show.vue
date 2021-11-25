@@ -44,6 +44,15 @@
 					></v-textarea>
 				</v-col>
 			</v-row>
+			<v-row>
+				<v-spacer></v-spacer>
+				<v-col cols="2" md="2">
+					<v-btn block color="black" class="accent--text" @click="backToAll()">
+						Back to Courses
+					</v-btn>
+				</v-col>
+				<v-spacer></v-spacer>
+			</v-row>
 	</v-container>
 </template>
 
@@ -79,6 +88,9 @@ export default {
 					}
 				)
 				.catch(error => console.log("getData() error caught: ", error))
+		},
+		backToAll(){
+			this.$router.push({ name: 'All Courses'})
 		}
 	}
 };
