@@ -79,7 +79,6 @@ export default {
 	},
 	data(){
 		return{
-			course: {},
 			form: {
 				title: '',
 				code: '',
@@ -104,12 +103,12 @@ export default {
 				})
 				.then(response => {
 						console.log("getData() response: ", response.data.data)
-						this.course = response.data.data
-						this.form.title = this.course.title
-                        this.form.description = this.course.description
-                        this.form.code = this.course.code
-                        this.form.points = this.course.points
-                        this.form.level = this.course.level
+						let course = response.data.data
+						this.form.title = course.title
+                        this.form.description = course.description
+                        this.form.code = course.code
+                        this.form.points = course.points
+                        this.form.level = course.level
 					}
 				)
 				.catch(error => console.log("getData() error caught: ", error))
