@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import axios from '@/config/college.js'
 
 Vue.use(Vuex)
 
@@ -21,7 +21,7 @@ export default new Vuex.Store({
     actions:{
         login(context, credentials){
             axios
-            .post("https://college-api-mo.herokuapp.com/api/login",
+            .post("login",
 			{
 				email: credentials.email,
 				password: credentials.password

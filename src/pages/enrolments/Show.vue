@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/config/college.js'
 
 export default {
 	name: "EnrolmentView",
@@ -26,7 +26,7 @@ export default {
 		getData(){
 			let token = localStorage.getItem('token')
 			axios
-				.get(`https://college-api-mo.herokuapp.com/api/enrolments/${this.$route.params.id}`,
+				.get(`enrolments/${this.$route.params.id}`,
 				{
 					headers: {
 						"Authorization" : `Bearer ${token}`

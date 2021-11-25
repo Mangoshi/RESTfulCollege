@@ -4,7 +4,6 @@
 			<v-row>
 				<v-col cols="12" md="6">
 					<v-text-field
-						id="title-input"
 						v-model="form.title"
 						color="accent"
 						label="Title"
@@ -14,7 +13,6 @@
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
-						id="code-input"
 						v-model="form.code"
 						color="accent"
 						label="Code"
@@ -24,7 +22,6 @@
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
-						id="course-input"
 						v-model="form.level"
 						color="accent"
 						label="Level"
@@ -35,7 +32,6 @@
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
-						id="course-input"
 						v-model="form.points"
 						color="accent"
 						label="Points Required"
@@ -46,7 +42,6 @@
 				</v-col>
 				<v-col cols="12" md="12">
 					<v-textarea
-						id="description-input"
 						v-model="form.description"
 						color="accent"
 						label="Description"
@@ -75,7 +70,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/config/college.js'
 
 export default {
 	name: "CourseEdit",
@@ -101,7 +96,7 @@ export default {
 		getData(){
 			let token = localStorage.getItem('token')
 			axios
-				.get(`https://college-api-mo.herokuapp.com/api/courses/${this.$route.params.id}`,
+				.get(`courses/${this.$route.params.id}`,
 				{
 					headers: {
 						"Authorization" : `Bearer ${token}`
@@ -122,7 +117,7 @@ export default {
 		submitForm(){
 			let token = localStorage.getItem('token')
 			axios
-			.put(`https://college-api-mo.herokuapp.com/api/courses/${this.$route.params.id}`, this.form, {
+			.put(`courses/${this.$route.params.id}`, this.form, {
 				headers: {
 					"Authorization" : `Bearer ${token}`
 				}

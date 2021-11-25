@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/config/college.js'
 
 export default {
 	name: "CoursesIndex",
@@ -47,7 +47,7 @@ export default {
 		getData(){
 			let token = localStorage.getItem('token')
 			axios
-			.get(`https://college-api-mo.herokuapp.com/api/courses`,
+			.get(`courses`,
 			{
 				headers: {
 					"Authorization" : `Bearer ${token}`
@@ -87,7 +87,6 @@ export default {
 <!--#00FFFF #FFD600 #FF0000-->
 
 <style>
-
 	.viewBtn{
 		color: #00FFFF !important;
 		border-color: #00FFFF !important;
