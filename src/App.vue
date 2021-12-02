@@ -5,12 +5,12 @@
 			<!-- Side Bar -->
 
 			<v-navigation-drawer 
-			v-model="drawer" 
-			app 
-			permanent 
-			expand-on-hover
-			color="secondary"
-			>
+				v-model="drawer" 
+				app 
+				permanent 
+				expand-on-hover
+				color="secondary"
+				>
 				<v-list >
 					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
@@ -37,7 +37,7 @@
 							<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
 						</v-list-item>
-						
+
 						<v-list-item class="mb-10" :to="{name: 'All Lecturers'}">
 							<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
@@ -49,23 +49,22 @@
 			<!-- Navigation Bar -->
 
 			<v-app-bar 
-			app
-			color="secondary"
-			class="primary--text"
-			>
+				app
+				color="secondary"
+				class="primary--text"
+				>
 				<v-toolbar-title class="navTitle">
 					<span class="rc1">REST</span><span class="rc2">ful</span> College<span class="rc3">&nbsp;(&nbsp;{{ currentRouteName }}&nbsp;)</span>
 				</v-toolbar-title>
 
 				<v-spacer></v-spacer>
-				
+
 				<label for="v-switch" class="mr-5">dark mode: {{ switchLabel }}</label>
 				<v-switch 
 					:value="darkMode" 
 					@change="toggleDarkMode"
 					class="mt-5 mr-5">
 				</v-switch>
-			
 				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn accent black--text">Log Out</v-btn>
 			</v-app-bar>
 
@@ -189,6 +188,12 @@ export default {
 	}
 	.sideLink:hover{
 		text-decoration: underline;
+	}
+
+/* Button Styling */
+
+	.btnGroup *{
+		height: 24px !important;
 	}
 
 /* CRUD Button Styling */
