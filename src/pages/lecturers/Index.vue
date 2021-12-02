@@ -7,19 +7,15 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
+			<v-btn class="addBtn mt-4 float-right">Add Lecturer</v-btn>
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
-		<v-row>
-			<v-col
-				cols="12"
-				sm="6"
-				md="4"
-				lg="3"
-				xl="2"
-			>
+		<v-row align-content="space-between">
+			<v-col cols="12" sm="6" md="4" lg="3" xl="2">
 				<v-switch
-					v-model="singleExpand"
-					label="Expand Single Item"
+					v-model="expandToggle"
+					label="Expand All"
+					color="accent"
 				></v-switch>
 			</v-col>
 		</v-row>
@@ -31,7 +27,7 @@
 			:items="filtered"
 			item-key="id"
 			:items-per-page="100"
-			:single-expand="singleExpand"
+			:expanded="expanded"
 			hide-default-footer
 			>
 			<template v-slot:default="{ items, isExpanded, expand }">
@@ -54,6 +50,7 @@
 								:label="isExpanded(item) ? 'Expanded' : 'Closed'"
 								class="pl-4 mt-0"
 								@change="(v) => expand(item, v)"
+								color="accent"
 							></v-switch>
 							<v-divider></v-divider>
 							<v-item-group class="d-flex justify-space-between btnGroup pa-2">
@@ -110,8 +107,9 @@ export default {
 	data(){
 		return{
 			lecturers: [],
-			singleExpand: false,
-			searchQuery: ""
+			searchQuery: "",
+			expandToggle: false,
+			expand: [],
 		}
 	},
 	computed:{
@@ -119,7 +117,14 @@ export default {
 			return this.lecturers.filter(lecturer  => {
 				return lecturer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
 			})
-		}
+		},
+		expanded(){
+			if(!this.expandToggle){
+				return []
+			} else {
+				return this.filtered
+			}
+		},
 	},
 	mounted(){
 		this.getData()

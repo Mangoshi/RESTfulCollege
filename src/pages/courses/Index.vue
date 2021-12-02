@@ -8,6 +8,7 @@
 					color="accent"
 					v-model="searchQuery">
 				</v-text-field>
+				<v-btn class="addBtn mt-4 float-right">Add Course</v-btn>
 			</v-row>
 			<v-row>
 				<v-col

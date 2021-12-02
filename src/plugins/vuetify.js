@@ -10,6 +10,7 @@ export default new Vuetify({
 	theme: {
 		themes: {
 			light: {
+				black: '#000',
 				primary: '#000',
 				secondary: '#fff',
 				accent: colors.pink.lighten2,
@@ -21,6 +22,7 @@ export default new Vuetify({
 				deleteFG: '#000',
 			},
 			dark: {
+				black: '#000',
 				primary: '#fff',
 				secondary: '#000',
 				accent: colors.orange.base,

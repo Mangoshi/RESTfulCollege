@@ -7,31 +7,20 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
+			<v-btn class="addBtn mt-4 float-right">Add Enrolment</v-btn>
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row>
-			<v-col
-				cols="12"
-				sm="6"
-				md="4"
-				lg="3"
-				xl="2"
-				>
+			<v-col cols="12" sm="6" md="4" lg="3" xl="2">
 				<v-switch
-					v-model="singleExpand"
-					label="Expand Single Item"
+					v-model="expandToggle"
+					label="Expand All"
 					color="accent"
 				></v-switch>
 			</v-col>
-			<v-col
-				cols="12"
-				sm="6"
-				md="4"
-				lg="3"
-				xl="2"
-				>
+			<v-col cols="12" sm="6" md="4" lg="3" xl="2">
 				<v-switch
-					v-model="filterByLecturer"
+					v-model="filterToggle"
 					label="Filter By Lecturer"
 					color="accent"
 				></v-switch>
@@ -45,8 +34,8 @@
 			:items="filtered"
 			item-key="id"
 			:items-per-page="100"
-			:single-expand="singleExpand"
 			hide-default-footer
+			:expanded="expanded"
 			>
 			<template v-slot:default="{ items, isExpanded, expand }">
 				<v-row>
@@ -62,6 +51,8 @@
 						<v-card>
 							<v-card-title>
 							<h4>{{ item.course.title }}</h4>
+							<hr>
+							<small>{{ item.lecturer.name }}</small>
 							</v-card-title>
 							<v-switch
 								:input-value="isExpanded(item)"
@@ -112,21 +103,29 @@ export default {
 	},
 	data(){
 		return{
-			singleExpand: false,
 			enrolments: [],
 			searchQuery: "",
-			filterByLecturer: false,
+			filterToggle: false,
+			expandToggle: false,
+			expand: [],
 		}
 	},
 	computed:{
 		filtered(){
 			return this.enrolments.filter(enrolment  => {
-				if(!this.filterByLecturer){
+				if(!this.filterToggle){
 					return enrolment.course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
 				} else {
 					return enrolment.lecturer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
 				}
 			})
+		},
+		expanded(){
+			if(!this.expandToggle){
+				return []
+			} else {
+				return this.filtered
+			}
 		},
 	},
 	mounted(){

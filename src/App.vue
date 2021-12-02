@@ -193,6 +193,16 @@ export default {
 
 /* CRUD Button Styling */
 
+	.addBtn{
+		color: var(--v-black) !important;
+		border: 1px solid var(--v-black) !important;
+		background-color: var(--v-accent) !important;
+	}
+	.addBtn:hover{
+		color: var(--v-accent) !important;
+		border: 1px solid var(--v-accent) !important;
+		background-color: var(--v-black) !important;
+	}
 	.viewBtn{
 		color: var(--v-viewFG) !important;
 		border-color: var(--v-viewFG) !important;
