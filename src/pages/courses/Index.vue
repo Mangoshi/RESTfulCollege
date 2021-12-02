@@ -1,12 +1,15 @@
 <template>
 	<div>
-		<v-container>
+		<v-container fluid>
 			<v-row>
 				<v-col
 				v-for="course in courses"
 				:key="course.id" 
 				cols="12"
-				sm="4">
+				sm="6"
+				md="4"
+				lg="3"
+				xl="2">
 					<v-card
 					elevation="2"
 					outlined
@@ -16,9 +19,9 @@
 						height="200px"
 						></v-img>
 						<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-							<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="viewCourse(course)">View</v-btn>
-							<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="editCourse(course)">Edit</v-btn>
-							<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="deleteCourse(course)">Delete</v-btn>
+							<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
+							<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
+							<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="del(course)">Delete</v-btn>
 						</v-item-group>
 					</v-card>
 				</v-col>
@@ -60,7 +63,7 @@ export default {
 			)
 			.catch(error => console.log("getData() error caught: ", error))
 		},
-		viewCourse(course){
+		view(course){
 			this.$router.push({
 				name: 'Course Viewer',
 				params:{ 
@@ -68,7 +71,7 @@ export default {
 				},
 			})
 		},
-		editCourse(course){
+		edit(course){
 			this.$router.push({
 				name: 'Course Editor',
 				params:{ 
@@ -76,7 +79,7 @@ export default {
 				},
 			})
 		},
-		deleteCourse(){
+		del(){
 		
 		},
 		

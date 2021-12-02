@@ -7,7 +7,7 @@
 		<v-data-iterator
 			:items="enrolments"
 			item-key="id"
-			:items-per-page="12"
+			:items-per-page="100"
 			:single-expand="singleExpand"
 			hide-default-footer
 		>
@@ -20,6 +20,7 @@
 					sm="6"
 					md="4"
 					lg="3"
+					xl="2"
 				>
 				<v-card>
 					<v-card-title>
@@ -31,6 +32,12 @@
 						class="pl-4 mt-0"
 						@change="(v) => expand(item, v)"
 					></v-switch>
+					<v-divider></v-divider>
+					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
+						<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="view(enrolment)">View</v-btn>
+						<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="edit(enrolment)">Edit</v-btn>
+						<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="del(enrolment)">Delete</v-btn>
+					</v-item-group>
 					<v-divider></v-divider>
 					<v-list
 						v-if="isExpanded(item)"
@@ -72,19 +79,38 @@ export default {
 		getData(){
 			let token = localStorage.getItem('token')
 			axios
-				.get(`enrolments`,
-				{
-					headers: {
-						"Authorization" : `Bearer ${token}`
-					}
-				})
-				.then(response => {
-						console.log("getData() response: ", response.data.data)
-						this.enrolments = response.data.data
-					}
-				)
-				.catch(error => console.log("getData() error caught: ", error))
-		}
+			.get(`enrolments`,
+			{
+				headers: {
+					"Authorization" : `Bearer ${token}`
+				}
+			})
+			.then(response => {
+					console.log("getData() response: ", response.data.data)
+					this.enrolments = response.data.data
+				}
+			)
+			.catch(error => console.log("getData() error caught: ", error))
+		},
+		view(enrolment){
+			this.$router.push({
+				name: 'Enrolment Viewer',
+				params:{ 
+					id: enrolment.id 
+				},
+			})
+		},
+		edit(enrolment){
+			this.$router.push({
+				name: 'Enrolment Editor',
+				params:{ 
+					id: enrolment.id 
+				},
+			})
+		},
+		del(){
+		
+		},
 	}
 };
 </script>

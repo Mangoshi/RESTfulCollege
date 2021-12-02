@@ -7,7 +7,7 @@
 		<v-data-iterator
 			:items="lecturers"
 			item-key="id"
-			:items-per-page="12"
+			:items-per-page="100"
 			:single-expand="singleExpand"
 			hide-default-footer
 		>
@@ -20,6 +20,7 @@
 					sm="6"
 					md="4"
 					lg="3"
+					xl="2"
 				>
 				<v-card>
 					<v-card-title>
@@ -31,6 +32,12 @@
 						class="pl-4 mt-0"
 						@change="(v) => expand(item, v)"
 					></v-switch>
+					<v-divider></v-divider>
+					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
+						<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="view(lecturer)">View</v-btn>
+						<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="edit(lecturer)">Edit</v-btn>
+						<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="del(lecturer)">Delete</v-btn>
+					</v-item-group>
 					<v-divider></v-divider>
 					<v-list
 						v-if="isExpanded(item)"
@@ -60,7 +67,9 @@
 						{{ item.address }}
 						</v-list-item-content>
 					</v-list-item>
+
 					</v-list>
+					
 				</v-card>
 				</v-col>
 			</v-row>
@@ -90,19 +99,38 @@ export default {
 		getData(){
 			let token = localStorage.getItem('token')
 			axios
-				.get(`lecturers`,
-				{
-					headers: {
-						"Authorization" : `Bearer ${token}`
-					}
-				})
-				.then(response => {
-						console.log("getData() response: ", response.data.data)
-						this.lecturers = response.data.data
-					}
-				)
-				.catch(error => console.log("getData() error caught: ", error))
-		}
+			.get(`lecturers`,
+			{
+				headers: {
+					"Authorization" : `Bearer ${token}`
+				}
+			})
+			.then(response => {
+					console.log("getData() response: ", response.data.data)
+					this.lecturers = response.data.data
+				}
+			)
+			.catch(error => console.log("getData() error caught: ", error))
+		},
+		view(lecturer){
+			this.$router.push({
+				name: 'Lecturer Viewer',
+				params:{ 
+					id: lecturer.id 
+				},
+			})
+		},
+		edit(lecturer){
+			this.$router.push({
+				name: 'Lecturer Editor',
+				params:{ 
+					id: lecturer.id 
+				},
+			})
+		},
+		del(){
+		
+		},
 	}
 };
 </script>
