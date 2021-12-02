@@ -1,9 +1,14 @@
 <template>
 	<div>
 		<v-container fluid>
+			<v-text-field 
+			label="Search Courses"
+			color="accent"
+			v-model="searchQuery">
+			</v-text-field>
 			<v-row>
 				<v-col
-				v-for="course in courses"
+				v-for="course in filtered"
 				:key="course.id" 
 				cols="12"
 				sm="6"
@@ -40,7 +45,15 @@ export default {
 	},
 	data(){
 		return{
-			courses: []
+			courses: [],
+			searchQuery: ""
+		}
+	},
+	computed:{
+		filtered(){
+			return this.courses.filter(course  => {
+				return course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+			})
 		}
 	},
 	mounted(){

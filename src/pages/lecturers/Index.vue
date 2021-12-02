@@ -1,11 +1,20 @@
 <template>
 	<v-container fluid>
+		<v-row>
+			<v-text-field 
+				label="Search Lecturers"
+				color="accent"
+				v-model="searchQuery">
+			</v-text-field>
+		</v-row>
+		<v-row>
 		<v-switch
 			v-model="singleExpand"
 			label="Expand Single Item"
 		></v-switch>
+		</v-row>
 		<v-data-iterator
-			:items="lecturers"
+			:items="filtered"
 			item-key="id"
 			:items-per-page="100"
 			:single-expand="singleExpand"
@@ -90,6 +99,14 @@ export default {
 		return{
 			lecturers: [],
 			singleExpand: false,
+			searchQuery: ""
+		}
+	},
+	computed:{
+		filtered(){
+			return this.lecturers.filter(lecturer  => {
+				return lecturer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+			})
 		}
 	},
 	mounted(){

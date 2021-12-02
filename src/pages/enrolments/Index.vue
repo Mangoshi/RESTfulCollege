@@ -1,11 +1,28 @@
 <template>
 	<v-container fluid>
-		<v-switch
-			v-model="singleExpand"
-			label="Expand Single Item"
-		></v-switch>
+		<v-row>
+			<v-text-field 
+				label="Search Enrolments"
+				color="accent"
+				v-model="searchQuery">
+			</v-text-field>
+		</v-row>
+		<v-row>
+			<v-switch
+				v-model="searchByName"
+				label="Search By Lecturer Name"
+				color="accent"
+				class="mr-5"
+			></v-switch>
+			<v-switch
+				v-model="singleExpand"
+				label="Expand Single Item"
+				color="accent"
+				class="mr-5"
+			></v-switch>
+		</v-row>
 		<v-data-iterator
-			:items="enrolments"
+			:items="filtered"
 			item-key="id"
 			:items-per-page="100"
 			:single-expand="singleExpand"
@@ -31,6 +48,7 @@
 						:label="isExpanded(item) ? 'Expanded' : 'Closed'"
 						class="pl-4 mt-0"
 						@change="(v) => expand(item, v)"
+						color="accent"
 					></v-switch>
 					<v-divider></v-divider>
 					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
@@ -47,6 +65,12 @@
 						<v-list-item-content>Course ID:</v-list-item-content>
 						<v-list-item-content class="align-end">
 						{{ item.course_id }}
+						</v-list-item-content>
+					</v-list-item>
+					<v-list-item>
+						<v-list-item-content>Lecturer name:</v-list-item-content>
+						<v-list-item-content class="align-end">
+						{{ item.lecturer.name }}
 						</v-list-item-content>
 					</v-list-item>
 					</v-list>
@@ -69,8 +93,21 @@ export default {
 	data(){
 		return{
 			singleExpand: false,
-			enrolments: []
+			enrolments: [],
+			searchQuery: "",
+			searchByName: false,
 		}
+	},
+	computed:{
+		filtered(){
+			return this.enrolments.filter(enrolment  => {
+				if(!this.searchByName){
+					return enrolment.course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+				} else {
+					return enrolment.lecturer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+				}
+			})
+		},
 	},
 	mounted(){
 		this.getData()
