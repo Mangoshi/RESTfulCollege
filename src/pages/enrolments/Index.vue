@@ -7,6 +7,7 @@
 				v-model="searchQuery">
 			</v-text-field>
 		</v-row>
+		<v-divider class="mt-3"></v-divider>
 		<v-row>
 			<v-switch
 				v-model="searchByName"
@@ -21,6 +22,10 @@
 				class="mr-5"
 			></v-switch>
 		</v-row>
+		<v-divider class="mb-5"></v-divider>
+		<!-- TO-DO: -->
+		<!-- Figure out pagination with data iterators -->
+		<!-- Maybe figure out their own sorting & filtering methods -->
 		<v-data-iterator
 			:items="filtered"
 			item-key="id"
