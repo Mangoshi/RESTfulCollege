@@ -2,6 +2,7 @@
 	<v-container fluid>
 		<v-row>
 			<v-text-field 
+				class="ml-3 mr-3"
 				label="Search Enrolments"
 				color="accent"
 				v-model="searchQuery">
@@ -9,18 +10,32 @@
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row>
-			<v-switch
-				v-model="searchByName"
-				label="Search By Lecturer Name"
-				color="accent"
-				class="mr-5"
-			></v-switch>
-			<v-switch
-				v-model="singleExpand"
-				label="Expand Single Item"
-				color="accent"
-				class="mr-5"
-			></v-switch>
+			<v-col
+				cols="12"
+				sm="6"
+				md="4"
+				lg="3"
+				xl="2"
+			>
+				<v-switch
+					v-model="singleExpand"
+					label="Expand Single Item"
+					color="accent"
+				></v-switch>
+			</v-col>
+			<v-col
+				cols="12"
+				sm="6"
+				md="4"
+				lg="3"
+				xl="2"
+			>
+				<v-switch
+					v-model="filterByLecturer"
+					label="Filter By Lecturer"
+					color="accent"
+				></v-switch>
+			</v-col>
 		</v-row>
 		<v-divider class="mb-5"></v-divider>
 		<!-- TO-DO: -->
@@ -100,13 +115,13 @@ export default {
 			singleExpand: false,
 			enrolments: [],
 			searchQuery: "",
-			searchByName: false,
+			filterByLecturer: false,
 		}
 	},
 	computed:{
 		filtered(){
 			return this.enrolments.filter(enrolment  => {
-				if(!this.searchByName){
+				if(!this.filterByLecturer){
 					return enrolment.course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
 				} else {
 					return enrolment.lecturer.name.toLowerCase().includes(this.searchQuery.toLowerCase())

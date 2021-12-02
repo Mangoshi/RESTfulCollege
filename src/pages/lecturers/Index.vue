@@ -2,6 +2,7 @@
 	<v-container fluid>
 		<v-row>
 			<v-text-field 
+				class="ml-3 mr-3"
 				label="Search Lecturers"
 				color="accent"
 				v-model="searchQuery">
@@ -9,10 +10,18 @@
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row>
-		<v-switch
-			v-model="singleExpand"
-			label="Expand Single Item"
-		></v-switch>
+			<v-col
+				cols="12"
+				sm="6"
+				md="4"
+				lg="3"
+				xl="2"
+			>
+				<v-switch
+					v-model="singleExpand"
+					label="Expand Single Item"
+				></v-switch>
+			</v-col>
 		</v-row>
 		<v-divider class="mb-5"></v-divider>
 		<!-- TO-DO: -->

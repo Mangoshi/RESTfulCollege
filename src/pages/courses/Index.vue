@@ -1,11 +1,14 @@
 <template>
 	<div>
 		<v-container fluid>
-			<v-text-field 
-			label="Search Courses"
-			color="accent"
-			v-model="searchQuery">
-			</v-text-field>
+			<v-row>
+				<v-text-field 
+					class="ml-3 mr-3"
+					label="Search Courses"
+					color="accent"
+					v-model="searchQuery">
+				</v-text-field>
+			</v-row>
 			<v-row>
 				<v-col
 				v-for="course in filtered"
