@@ -16,7 +16,7 @@
 				md="4"
 				lg="3"
 				xl="2"
-			>
+				>
 				<v-switch
 					v-model="singleExpand"
 					label="Expand Single Item"
@@ -29,7 +29,7 @@
 				md="4"
 				lg="3"
 				xl="2"
-			>
+				>
 				<v-switch
 					v-model="filterByLecturer"
 					label="Filter By Lecturer"
@@ -47,56 +47,56 @@
 			:items-per-page="100"
 			:single-expand="singleExpand"
 			hide-default-footer
-		>
+			>
 			<template v-slot:default="{ items, isExpanded, expand }">
-			<v-row>
-				<v-col
-					v-for="item in items"
-					:key="item.id"
-					cols="12"
-					sm="6"
-					md="4"
-					lg="3"
-					xl="2"
-				>
-				<v-card>
-					<v-card-title>
-					<h4>{{ item.course.title }}</h4>
-					</v-card-title>
-					<v-switch
-						:input-value="isExpanded(item)"
-						:label="isExpanded(item) ? 'Expanded' : 'Closed'"
-						class="pl-4 mt-0"
-						@change="(v) => expand(item, v)"
-						color="accent"
-					></v-switch>
-					<v-divider></v-divider>
-					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-						<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="view(enrolment)">View</v-btn>
-						<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="edit(enrolment)">Edit</v-btn>
-						<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="del(enrolment)">Delete</v-btn>
-					</v-item-group>
-					<v-divider></v-divider>
-					<v-list
-						v-if="isExpanded(item)"
-						dense
-					>
-					<v-list-item>
-						<v-list-item-content>Course ID:</v-list-item-content>
-						<v-list-item-content class="align-end">
-						{{ item.course_id }}
-						</v-list-item-content>
-					</v-list-item>
-					<v-list-item>
-						<v-list-item-content>Lecturer name:</v-list-item-content>
-						<v-list-item-content class="align-end">
-						{{ item.lecturer.name }}
-						</v-list-item-content>
-					</v-list-item>
-					</v-list>
-				</v-card>
-				</v-col>
-			</v-row>
+				<v-row>
+					<v-col
+						v-for="item in items"
+						:key="item.id"
+						cols="12"
+						sm="6"
+						md="4"
+						lg="3"
+						xl="2"
+						>
+						<v-card>
+							<v-card-title>
+							<h4>{{ item.course.title }}</h4>
+							</v-card-title>
+							<v-switch
+								:input-value="isExpanded(item)"
+								:label="isExpanded(item) ? 'Expanded' : 'Closed'"
+								class="pl-4 mt-0"
+								@change="(v) => expand(item, v)"
+								color="accent"
+							></v-switch>
+							<v-divider></v-divider>
+							<v-item-group class="d-flex justify-space-between btnGroup pa-2">
+								<v-btn class="v-btn--outlined viewBtn" @click="view(enrolment)">View</v-btn>
+								<v-btn class="v-btn--outlined editBtn" @click="edit(enrolment)">Edit</v-btn>
+								<v-btn class="v-btn--outlined deleteBtn" @click="del(enrolment)">Delete</v-btn>
+							</v-item-group>
+							<v-divider></v-divider>
+							<v-list
+								v-if="isExpanded(item)"
+								dense
+								>
+								<v-list-item>
+									<v-list-item-content>Course ID:</v-list-item-content>
+									<v-list-item-content class="align-end">
+										{{ item.course_id }}
+									</v-list-item-content>
+								</v-list-item>
+								<v-list-item>
+									<v-list-item-content>Lecturer name:</v-list-item-content>
+									<v-list-item-content class="align-end">
+										{{ item.lecturer.name }}
+									</v-list-item-content>
+								</v-list-item>
+							</v-list>
+						</v-card>
+					</v-col>
+				</v-row>
 			</template>
 		</v-data-iterator>
 	</v-container>

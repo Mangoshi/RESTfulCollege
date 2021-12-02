@@ -143,6 +143,9 @@ export default {
 </script>
 
 <style>
+
+/* Font Classes */
+
 	.spacemono{
 		font-family: 'Space Mono', monospace !important;
 	}
@@ -150,12 +153,18 @@ export default {
 		font-family: 'Space Mono', monospace !important;
 		font-weight: 700;
 	}
+
+/* Router Link styling */
+
 	.router-link-exact-active *{
         color: var(--v-accent) !important;
     }
 	.router-link-exact-active {
         color: var(--v-accent) !important;
     }
+
+/* RESTful College navbar title styling */
+
 	.navTitle{
 		font-size: 1.5em !important;
 		user-select: none;
@@ -171,6 +180,9 @@ export default {
 	.rc3{
 		font-size: 75%;
 	}
+
+/* Sidebar Link Styling */
+
 	.sideLink{
 		font-size: 1.3em !important;
 		text-decoration: none;
@@ -178,4 +190,38 @@ export default {
 	.sideLink:hover{
 		text-decoration: underline;
 	}
+
+/* CRUD Button Styling */
+
+	.viewBtn{
+		color: var(--v-viewFG) !important;
+		border-color: var(--v-viewFG) !important;
+		background-color: var(--v-viewBG) !important;
+	}
+	.viewBtn:hover{
+		color: var(--v-viewBG) !important;
+		border-color: var(--v-viewBG) !important;
+		background-color: var(--v-viewFG) !important;
+	}
+	.editBtn{
+		color: var(--v-editFG) !important;
+		border-color: var(--v-editFG) !important;
+		background-color: var(--v-editBG) !important;
+	}
+	.editBtn:hover{
+		color: var(--v-editBG) !important;
+		border-color: var(--v-editBG) !important;
+		background-color: var(--v-editFG) !important;
+	}
+	.deleteBtn{
+		color: var(--v-deleteFG) !important;
+		border-color: var(--v-deleteFG) !important;
+		background-color: var(--v-deleteBG) !important;
+	}
+	.deleteBtn:hover{
+		color: var(--v-deleteBG) !important;
+		border-color: var(--v-deleteBG) !important;
+		background-color: var(--v-deleteFG) !important;
+	}
+
 </style>

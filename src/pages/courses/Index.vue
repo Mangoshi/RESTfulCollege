@@ -27,9 +27,9 @@
 						height="200px"
 						></v-img>
 						<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-							<v-btn class="btn-outline-info v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
-							<v-btn class="btn-outline-warning v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
-							<v-btn class="btn-outline-error v-btn--outlined deleteBtn" @click="del(course)">Delete</v-btn>
+							<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
+							<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
+							<v-btn class="v-btn--outlined deleteBtn" @click="del(course)">Delete</v-btn>
 						</v-item-group>
 					</v-card>
 				</v-col>
@@ -102,38 +102,3 @@ export default {
 	}
 };
 </script>
-
-<!--#00FFFF #FFD600 #FF0000-->
-
-<style>
-	.viewBtn{
-		color: #00FFFF !important;
-		border-color: #00FFFF !important;
-		background-color: black !important;
-	}
-	.viewBtn:hover{
-		color: black !important;
-		border-color:black !important;
-		background-color:  #00FFFF !important;
-	}
-	.editBtn{
-		color: #FFD600 !important;
-		border-color: #FFD600 !important;
-		background-color: black !important;
-	}
-	.editBtn:hover{
-		color: black !important;
-		border-color:black !important;
-		background-color:  #FFD600 !important;
-	}
-	.deleteBtn{
-		color: #FF0000 !important;
-		border-color: #FF0000 !important;
-		background-color: black !important;
-	}
-	.deleteBtn:hover{
-		color: black !important;
-		border-color:black !important;
-		background-color:  #FF0000 !important;
-	}
-</style>
