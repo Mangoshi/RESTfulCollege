@@ -8,7 +8,7 @@
 					color="accent"
 					v-model="searchQuery">
 				</v-text-field>
-				<v-btn class="addBtn mt-4 float-right">Add Course</v-btn>
+				<v-btn class="addBtn mt-4 float-right" @click="add()">Add Course</v-btn>
 			</v-row>
 			<v-row>
 				<v-col
@@ -99,7 +99,9 @@ export default {
 		del(){
 		
 		},
-		
+		add(){
+			this.$router.push({ name: 'Add Course' })
+		}
 	}
 };
 </script>

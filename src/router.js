@@ -22,6 +22,11 @@ export default new Router({
 			component: () => import("./pages/courses/Index.vue")
 		},
 		{
+			path: "/courses/add",
+			name: "Add Course",
+			component: () => import("./pages/courses/Add.vue")
+		},
+		{
 			path: "/courses/:id",
 			name: "Course Viewer",
 			component: () => import("./pages/courses/Show.vue")
