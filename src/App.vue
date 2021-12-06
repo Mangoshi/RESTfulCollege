@@ -1,10 +1,11 @@
 <template>
 	<div>
+		<!-- Styling entire app with spacemono font & passing in the Vuetify theme as CSS variables -->
 		<v-app class="spacemono" :style="cssProps">
 
 			<!-- Side Bar -->
-
 			<v-navigation-drawer 
+				v-if="loggedIn"
 				v-model="drawer" 
 				app 
 				permanent 
@@ -15,29 +16,27 @@
 					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
 							color="primary" 
-							class="secondary--text">
+							class="secondary--text"
+							>
 							X_X
 						</v-list-item-avatar>
 					</v-list-item>
 					<v-list-item-group
 						v-model="selectedItem"
-						color="primary">
-
+						color="primary"
+						>
 						<v-list-item class="mb-10" to="/">
 							<router-link to="/"><v-icon>mdi-home</v-icon></router-link>&nbsp;
 							<router-link to="/" class="sideLink">Home</router-link>
 						</v-list-item>
-
 						<v-list-item class="mb-10" :to="{name: 'All Courses'}">
 							<router-link :to="{name: 'All Courses'}"><v-icon>mdi-school</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Courses'}" class="sideLink">Courses</router-link>
 						</v-list-item>
-
 						<v-list-item class="mb-10" :to="{name: 'All Enrolments'}">
 							<router-link :to="{name: 'All Enrolments'}"><v-icon>mdi-text</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Enrolments'}" class="sideLink">Enrolments</router-link>
 						</v-list-item>
-
 						<v-list-item class="mb-10" :to="{name: 'All Lecturers'}">
 							<router-link :to="{name: 'All Lecturers'}"><v-icon>mdi-account-group</v-icon></router-link>&nbsp;
 							<router-link :to="{name: 'All Lecturers'}" class="sideLink">Lecturers</router-link>
@@ -47,7 +46,6 @@
 			</v-navigation-drawer>
 
 			<!-- Navigation Bar -->
-
 			<v-app-bar 
 				app
 				color="secondary"
@@ -56,20 +54,20 @@
 				<v-toolbar-title class="navTitle">
 					<span class="rc1">REST</span><span class="rc2">ful</span> College<span class="rc3">&nbsp;(&nbsp;{{ currentRouteName }}&nbsp;)</span>
 				</v-toolbar-title>
-
+				<!---->
 				<v-spacer></v-spacer>
-
+				<!---->
 				<label for="v-switch" class="mr-5">dark mode: {{ switchLabel }}</label>
 				<v-switch 
 					:value="darkMode" 
 					@change="toggleDarkMode"
-					class="mt-5 mr-5">
+					class="mt-5 mr-5"
+					>
 				</v-switch>
 				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn accent black--text">Log Out</v-btn>
 			</v-app-bar>
 
 			<!-- Router View -->
-
 			<v-main>
 				<v-container fluid>
 					<router-view></router-view>
@@ -77,7 +75,6 @@
 			</v-main>
 
 			<!-- Footer -->
-
 			<MyFooter />
 
 		</v-app>

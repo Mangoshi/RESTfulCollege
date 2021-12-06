@@ -1,11 +1,19 @@
 <template>
 	<v-container>
-		<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
+		
 		<div v-if="!loggedIn">
 			<v-row>
-				<v-col></v-col>
-				<v-col class="col-3">
-					<v-card class="pa-5">
+				<v-spacer></v-spacer>
+				<v-col
+				cols="12"
+				sm="10"
+				md="8"
+				lg="6"
+				xl="4"
+				>
+					<v-card class="centered pa-5">
+						<v-icon style="width:100%; font-size: 10em;">mdi-school</v-icon>
+						<h2>RESTful College</h2>
 					<v-text-field color="accent" type="email" v-model="form.email" placeholder="email" />
 					<br>
 					<v-text-field color="accent" type="password" v-model="form.password" placeholder="password" />
@@ -13,10 +21,11 @@
 					<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
 					</v-card>
 				</v-col>
-				<v-col></v-col>
+				<v-spacer></v-spacer>
 			</v-row>
 		</div>
 		<div v-else>
+			<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
 			<div class="centered">
 				{{ currentDate }}
 			</div>

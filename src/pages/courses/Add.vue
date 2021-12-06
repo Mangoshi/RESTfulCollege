@@ -65,11 +65,11 @@ export default {
 	data(){
 		return{
 			form:{
-				title: '',
-				code: '',
-				level: '',
-				points: '',
-				description: '',
+				title: '123',
+				code: '234',
+				level: '345',
+				points: '456',
+				description: '789',
 			}
 		}
 	},

@@ -1,42 +1,41 @@
 <template>
-	<div>
-		<v-container fluid>
-			<v-row>
-				<v-text-field 
-					class="ml-3 mr-3"
-					label="Search Courses"
-					color="accent"
-					v-model="searchQuery">
-				</v-text-field>
-				<v-btn class="addBtn mt-4 float-right" @click="add()">Add Course</v-btn>
-			</v-row>
-			<v-row>
-				<v-col
-				v-for="course in filtered"
-				:key="course.id" 
-				cols="12"
-				sm="6"
-				md="4"
-				lg="3"
-				xl="2">
-					<v-card
-					elevation="2"
-					outlined
-					color="secondary">
-						<v-img
-						:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
-						height="200px"
-						></v-img>
-						<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-							<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
-							<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
-							<v-btn class="v-btn--outlined deleteBtn" @click="del(course)">Delete</v-btn>
-						</v-item-group>
-					</v-card>
-				</v-col>
-			</v-row>
-		</v-container>
-	</div>
+	<v-container fluid>
+		<v-row>
+			<v-text-field 
+				class="ml-3 mr-3"
+				label="Search Courses"
+				color="accent"
+				v-model="searchQuery">
+			</v-text-field>
+			<v-btn class="addBtn mt-4 float-right" @click="add()">Add Course</v-btn>
+		</v-row>
+		<v-row>
+			<v-col
+			v-for="(course, index) in filtered"
+			:key="course.id" 
+			cols="12"
+			sm="6"
+			md="4"
+			lg="3"
+			xl="2">
+				<v-card
+				elevation="2"
+				outlined
+				color="secondary"
+				>
+					<v-img
+					:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
+					height="200px"
+					></v-img>
+					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
+						<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
+						<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
+						<v-btn class="v-btn--outlined deleteBtn" @click="del(course, index)">Delete</v-btn>
+					</v-item-group>
+				</v-card>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -56,7 +55,9 @@ export default {
 	computed:{
 		filtered(){
 			return this.courses.filter(course  => {
-				return course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+				return course.title.toLowerCase().includes(
+					this.searchQuery.toLowerCase()
+					)
 			})
 		}
 	},
@@ -96,8 +97,29 @@ export default {
 				},
 			})
 		},
-		del(){
+		del(course, index){
+		console.log("Clicked course data: ", course)
+		console.log("Index data: ", index)
 		
+		let token = localStorage.getItem('token')
+			axios
+			.delete(`courses/${course.id}`,
+			{
+				headers: {
+					"Authorization" : `Bearer ${token}`
+				}
+			})
+			.then(response => {
+					console.log("del() response: ", response.data.data)
+					this.courses.splice(index, 1)
+					alert(`Course ${course.title} has been deleted.`)
+				}
+			)
+			.catch(error => {
+				console.log("del() error caught: ", error)
+				alert(`Course ${course.title} failed to be deleted.`)
+				}
+			)
 		},
 		add(){
 			this.$router.push({ name: 'Add Course' })
