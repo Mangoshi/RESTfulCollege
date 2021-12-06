@@ -38,17 +38,15 @@
 		<v-row justify="center">
 			<v-dialog v-model="dialog" persistent max-width="290">
 				<v-card>
-					<v-card-title class="text-h5">
-						Are you sure?
-					</v-card-title>
-					<v-card-text>This will permanently delete course {{ clickedCourse.title }} from the API</v-card-text>
+					<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
+					<v-card-text>This will permanently delete the {{ clickedCourse.title }} course from the API...</v-card-text>
 					<v-card-actions>
 						<v-spacer></v-spacer>
 						<v-btn color="green darken-1" text @click="dialog = false">
-							NO
+							Go back!
 						</v-btn>
 						<v-btn color="red darken-1" text @click="dialog = false, del(clickedCourse, clickedIndex)">
-							YES
+							Delete it! 
 						</v-btn>
 					</v-card-actions>
 				</v-card>
