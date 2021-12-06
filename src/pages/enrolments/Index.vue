@@ -7,7 +7,7 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
-			<v-btn class="addBtn mt-4 float-right">Add Enrolment</v-btn>
+			<v-btn class="addBtn mt-4 mr-3 float-right">Add</v-btn>
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row>
@@ -25,6 +25,16 @@
 					color="accent"
 				></v-switch>
 			</v-col>
+			<v-spacer></v-spacer>
+			<div class="mt-7 mr-3">
+				<span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
+				<v-btn dark color="accent" class="mr-1 black--text" @click="formerPage">
+					<v-icon>mdi-chevron-left</v-icon>
+				</v-btn>
+				<v-btn dark color="accent" class="ml-1 black--text" @click="nextPage">
+					<v-icon>mdi-chevron-right</v-icon>
+				</v-btn>
+			</div>
 		</v-row>
 		<v-divider class="mb-5"></v-divider>
 		<!-- TO-DO: -->
@@ -33,9 +43,10 @@
 		<v-data-iterator
 			:items="filtered"
 			item-key="id"
-			:items-per-page="100"
+			:items-per-page="itemsPerPage"
 			hide-default-footer
 			:expanded="expanded"
+			:page.sync="page"
 			>
 			<template v-slot:default="{ items, isExpanded, expand }">
 				<v-row>
@@ -108,6 +119,8 @@ export default {
 			filterToggle: false,
 			expandToggle: false,
 			expand: [],
+			page: 1,
+			itemsPerPage: 12
 		}
 	},
 	computed:{
@@ -126,6 +139,9 @@ export default {
 			} else {
 				return this.filtered
 			}
+		},
+		numberOfPages () {
+			return Math.ceil(this.filtered.length / this.itemsPerPage)
 		},
 	},
 	mounted(){
@@ -166,6 +182,12 @@ export default {
 		},
 		del(){
 		
+		},
+		nextPage () {
+			if (this.page + 1 <= this.numberOfPages) this.page += 1
+		},
+		formerPage () {
+			if (this.page - 1 >= 1) this.page -= 1
 		},
 	}
 };

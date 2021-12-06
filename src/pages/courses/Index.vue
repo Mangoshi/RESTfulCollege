@@ -7,7 +7,7 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
-			<v-btn class="addBtn mt-4 float-right" @click="add()">Add Course</v-btn>
+			<v-btn class="addBtn mt-4 float-right" @click="add()">Add</v-btn>
 		</v-row>
 		<v-row>
 			<v-col
@@ -30,7 +30,7 @@
 					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
 						<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
 						<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
-						<v-btn class="v-btn--outlined deleteBtn" @click="delAlert(course, index)">Delete</v-btn>
+						<v-btn class="v-btn--outlined deleteBtn" @click="delDialog(course, index)">Delete</v-btn>
 					</v-item-group>
 				</v-card>
 			</v-col>
@@ -117,7 +117,7 @@ export default {
 				},
 			})
 		},
-		delAlert(course, index){
+		delDialog(course, index){
 			// Show dialogue box
 			this.dialog = !this.dialog
 			// Assign clickedCourse to the value of the clicked course's data
