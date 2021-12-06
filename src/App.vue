@@ -62,6 +62,7 @@
 					:value="darkMode" 
 					@change="toggleDarkMode"
 					class="mt-5 mr-5"
+					color="accent"
 					>
 				</v-switch>
 				<v-btn v-if="$store.state.loggedIn" @click="logout()" class="v-btn accent black--text">Log Out</v-btn>
@@ -121,17 +122,25 @@ export default {
 		// so I can hide the sidebar when logged out
 		...mapState(['loggedIn']),
 
+		// making CSS color variables out of my theme from vuetify.js
 		cssProps () {
+			// create themeColors object
 			var themeColors = {}
+			// if dark mode is off,
 			if(this.darkMode === false){
+				// for each color key in themes.light, add to themeColors, adding '--v-' to the start of the key
+				// then assign this key the value of the color
 				Object.keys(this.$vuetify.theme.themes.light).forEach((color) => {
 					themeColors[`--v-${color}`] = this.$vuetify.theme.themes.light[color]
 			})
+			// else if dark mode is on
 			} else {
+				// fill themeColors with the colors from themes.dark instead
 				Object.keys(this.$vuetify.theme.themes.dark).forEach((color) => {
 					themeColors[`--v-${color}`] = this.$vuetify.theme.themes.dark[color]
 				})
 			}
+			// return themeColors object
 			return themeColors
 		}
 	}

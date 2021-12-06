@@ -30,11 +30,30 @@
 					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
 						<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
 						<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>
-						<v-btn class="v-btn--outlined deleteBtn" @click="del(course, index)">Delete</v-btn>
+						<v-btn class="v-btn--outlined deleteBtn" @click="delAlert(course, index)">Delete</v-btn>
 					</v-item-group>
 				</v-card>
 			</v-col>
 		</v-row>
+		<v-row justify="center">
+			<v-dialog v-model="dialog" persistent max-width="290">
+				<v-card>
+					<v-card-title class="text-h5">
+						Are you sure?
+					</v-card-title>
+					<v-card-text>This will permanently delete course {{ clickedCourse.title }} from the API</v-card-text>
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn color="green darken-1" text @click="dialog = false">
+							NO
+						</v-btn>
+						<v-btn color="red darken-1" text @click="dialog = false, del(clickedCourse, clickedIndex)">
+							YES
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
+			</v-row>
 	</v-container>
 </template>
 
@@ -49,7 +68,10 @@ export default {
 	data(){
 		return{
 			courses: [],
-			searchQuery: ""
+			searchQuery: "",
+			dialog: false,
+			clickedCourse: {},
+			clickedIndex: null
 		}
 	},
 	computed:{
@@ -97,33 +119,40 @@ export default {
 				},
 			})
 		},
-		del(course, index){
-		console.log("Clicked course data: ", course)
-		console.log("Index data: ", index)
-		
-		let token = localStorage.getItem('token')
-			axios
-			.delete(`courses/${course.id}`,
-			{
-				headers: {
-					"Authorization" : `Bearer ${token}`
-				}
-			})
-			.then(response => {
-					console.log("del() response: ", response.data.data)
-					this.courses.splice(index, 1)
-					alert(`Course ${course.title} has been deleted.`)
-				}
-			)
-			.catch(error => {
-				console.log("del() error caught: ", error)
-				alert(`Course ${course.title} failed to be deleted.`)
-				}
-			)
+		delAlert(course, index){
+			// Show dialogue box
+			this.dialog = !this.dialog
+			// Assign clickedCourse to the value of the clicked course's data
+			this.clickedCourse = course
+			// Assign clickedIndex to the value of the clicked course's index in array
+			this.clickedIndex = index
 		},
+		del(course, index){
+			console.log("del() Course data: ", course)
+			console.log("del() Index data: ", index)
+			let token = localStorage.getItem('token')
+				axios
+				.delete(`courses/${course.id}`,
+				{
+					headers: {
+						"Authorization" : `Bearer ${token}`
+					}
+				})
+				.then(response => {
+						console.log("del() response: ", response.data.data)
+						this.courses.splice(index, 1)
+						alert(`Course ${course.title} has been deleted successfully!`)
+					}
+				)
+				.catch(error => {
+					console.log("del() error caught: ", error)
+					alert(`Course ${course.title} failed to be deleted.`)
+					}
+				)
+			},
 		add(){
 			this.$router.push({ name: 'Add Course' })
 		}
 	}
-};
+}
 </script>
