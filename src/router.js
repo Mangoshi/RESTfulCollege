@@ -43,9 +43,19 @@ export default new Router({
 			component: () => import("./pages/enrolments/Index.vue")
 		},
 		{
+			path: "/enrolments/add",
+			name: "Add Enrolment",
+			component: () => import("./pages/enrolments/Add.vue")
+		},
+		{
 			path: "/enrolments/:id",
 			name: "Enrolment Viewer",
 			component: () => import("./pages/enrolments/Show.vue")
+		},
+		{
+			path: "/enrolments/edit/:id",
+			name: "Enrolment Editor",
+			component: () => import("./pages/enrolments/Edit.vue")
 		},
 		//// LECTURERS ////
 		{

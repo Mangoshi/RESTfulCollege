@@ -1,9 +1,59 @@
 <template>
-	<v-col>
-		<h2>{{ enrolment.course.title }} [{{ "ID: " + enrolment.id }}]</h2>
-		<hr>
-		<p>{{ "Date: " + enrolment.date + " Time: " + enrolment.time }}</p>
-	</v-col>
+	<v-container>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="enrolment.course.title"
+						color="accent"
+						label="Course"
+						readonly
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="enrolment.lecturer.name"
+						color="accent"
+						label="Lecturer"
+						readonly
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="enrolment.date"
+						color="accent"
+						label="Date"
+						readonly
+						type="date"
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-text-field
+						v-model="enrolment.time"
+						color="accent"
+						label="Time"
+						readonly
+						type="time"
+					></v-text-field>
+				</v-col>
+				<v-col cols="12" md="12">
+					<v-text-field
+						v-model="enrolment.status"
+						color="accent"
+						label="Status"
+						readonly
+					></v-text-field>
+				</v-col>
+			</v-row>
+			<v-row>
+				<v-spacer></v-spacer>
+				<v-col cols="2" md="2">
+					<v-btn block color="black" class="accent--text" @click="backToAll()">
+						Back to Enrolments
+					</v-btn>
+				</v-col>
+				<v-spacer></v-spacer>
+			</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -12,32 +62,35 @@ import axios from '@/config/college.js'
 export default {
 	name: "EnrolmentView",
 	components: {
-		
+
 	},
-	data(){
-		return{
+	data() {
+		return {
 			enrolment: {}
 		}
 	},
-	mounted(){
+	mounted() {
 		this.getData()
 	},
 	methods: {
-		getData(){
+		getData() {
 			let token = localStorage.getItem('token')
 			axios
-				.get(`enrolments/${this.$route.params.id}`,
-				{
-					headers: {
-						"Authorization" : `Bearer ${token}`
-					}
-				})
-				.then(response => {
-						console.log("getData() response: ", response.data.data)
-						this.enrolment = response.data.data
-					}
-				)
-				.catch(error => console.log("getData() error caught: ", error))
+			.get(`enrolments/${this.$route.params.id}`, {
+				headers: {
+					"Authorization": `Bearer ${token}`
+				}
+			})
+			.then(response => {
+				console.log("getData() response: ", response.data.data)
+				this.enrolment = response.data.data
+			})
+			.catch(error => console.log("getData() error caught: ", error))
+		},
+		backToAll() {
+			this.$router.push({
+				name: 'All Enrolments'
+			})
 		}
 	}
 };

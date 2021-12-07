@@ -51,7 +51,7 @@
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
-			</v-row>
+		</v-row>
 	</v-container>
 </template>
 
@@ -65,8 +65,10 @@ export default {
 	},
 	data(){
 		return{
+			// Common variables
 			courses: [],
 			searchQuery: "",
+			// Delete pop-up variables
 			dialog: false,
 			clickedCourse: {},
 			clickedIndex: null

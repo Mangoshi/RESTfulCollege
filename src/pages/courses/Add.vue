@@ -62,37 +62,43 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "CourseAdd",
-	data(){
-		return{
-			form:{
-				title: '123',
-				code: '234',
-				level: '345',
-				points: '456',
-				description: '789',
+		data() {
+			return {
+				form: {
+					title: '123',
+					code: '234',
+					level: '345',
+					points: '456',
+					description: '789',
+				}
+			}
+		},
+		methods: {
+			submitForm() {
+				let token = localStorage.getItem('token')
+				axios
+					.post(`courses`, this.form, {
+						headers: {
+							"Authorization": `Bearer ${token}`,
+							"Content-Type": 'text/json'
+						}
+					})
+					.then(response => {
+						console.log("submitForm() response: ", response.data.data)
+						this.$router.push({
+							name: "All Courses"
+						})
+					})
+					.catch(error => {
+						console.log("submitForm() error message: ", error.response.data.message)
+						console.log("All error data: ", error)
+					})
+			},
+			backToAll() {
+				this.$router.push({
+					name: 'All Courses'
+				})
 			}
 		}
-	},
-	methods: {
-		submitForm(){
-			let token = localStorage.getItem('token')
-			axios
-			.post(`courses`, this.form, {
-				headers: {
-					"Authorization" : `Bearer ${token}`,
-					"Content-Type" : 'text/json'
-				}
-			})
-			.then(response => {
-				console.log("submitForm() response: ", response.data.data)
-				this.$router.push({ name: "All Courses" })
-				}
-			)
-			.catch(error => console.log("submitForm() error caught: ", error))
-		},
-		backToAll(){
-			this.$router.push({ name: 'All Courses'})
-		}
-	}
-};
+	};
 </script>

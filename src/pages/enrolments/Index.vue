@@ -7,7 +7,7 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
-			<v-btn class="addBtn mt-4 mr-3 float-right">Add</v-btn>
+			<v-btn class="addBtn mt-4 mr-3 float-right" @click="add()">Add</v-btn>
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row>
@@ -37,9 +37,6 @@
 			</div>
 		</v-row>
 		<v-divider class="mb-5"></v-divider>
-		<!-- TO-DO: -->
-		<!-- Figure out pagination with data iterators -->
-		<!-- Maybe figure out their own sorting & filtering methods -->
 		<v-data-iterator
 			:items="filtered"
 			item-key="id"
@@ -51,7 +48,7 @@
 			<template v-slot:default="{ items, isExpanded, expand }">
 				<v-row>
 					<v-col
-						v-for="item in items"
+						v-for="(item, index) in items"
 						:key="item.id"
 						cols="12"
 						sm="6"
@@ -74,30 +71,65 @@
 							></v-switch>
 							<v-divider></v-divider>
 							<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-								<v-btn class="v-btn--outlined viewBtn" @click="view(enrolment)">View</v-btn>
-								<v-btn class="v-btn--outlined editBtn" @click="edit(enrolment)">Edit</v-btn>
-								<v-btn class="v-btn--outlined deleteBtn" @click="del(enrolment)">Delete</v-btn>
+								<v-btn class="v-btn--outlined viewBtn" @click="view(item)">View</v-btn>
+								<v-btn class="v-btn--outlined editBtn" @click="edit(item)">Edit</v-btn>
+								<v-btn class="v-btn--outlined deleteBtn" @click="delDialog(item, index)">Delete</v-btn>
 							</v-item-group>
 							<v-divider></v-divider>
 							<v-list
 								v-if="isExpanded(item)"
 								dense
 								>
+								<v-list-item-subtitle class="ml-4 accent--text">Course</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>Course ID:</v-list-item-content>
 									<v-list-item-content class="align-end">
-										{{ item.course_id }}
+										<span>{{item.course.title}} <sup>[{{item.course.id}}]</sup></span>
 									</v-list-item-content>
 								</v-list-item>
+								<v-list-item-subtitle class="ml-4 mt-2 accent--text">Lecturer</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>Lecturer name:</v-list-item-content>
 									<v-list-item-content class="align-end">
-										{{ item.lecturer.name }}
+										<span>{{item.lecturer.name}} <sup>[{{item.lecturer.id}}]</sup></span>
+									</v-list-item-content>
+								</v-list-item>
+								<v-list-item-subtitle class="ml-4 mt-2 accent--text">Status</v-list-item-subtitle>
+								<v-list-item>
+									<v-list-item-content class="align-end">
+										{{item.status}}
+									</v-list-item-content>
+								</v-list-item>
+								<v-list-item-subtitle class="ml-4 mt-2 accent--text">Date</v-list-item-subtitle>
+								<v-list-item>
+									<v-list-item-content class="align-end">
+										{{item.date}}
+									</v-list-item-content>
+								</v-list-item>
+								<v-list-item-subtitle class="ml-4 mt-2 accent--text">Time</v-list-item-subtitle>
+								<v-list-item>
+									<v-list-item-content class="align-end">
+										{{item.time}}
 									</v-list-item-content>
 								</v-list-item>
 							</v-list>
 						</v-card>
 					</v-col>
+				</v-row>
+				<v-row justify="center" v-if="dialog">
+					<v-dialog v-model="dialog" persistent max-width="290">
+						<v-card>
+							<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
+							<v-card-text>This will permanently delete the {{ clickedEnrolment.course.title }} // {{ clickedEnrolment.lecturer.name }}  enrolment from the API...</v-card-text>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn color="green darken-1" text @click="dialog = false">
+									Go back!
+								</v-btn>
+								<v-btn color="red darken-1" text @click="dialog = false, del(clickedEnrolment, clickedIndex)">
+									Delete it! 
+								</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
 				</v-row>
 			</template>
 		</v-data-iterator>
@@ -114,13 +146,19 @@ export default {
 	},
 	data(){
 		return{
+			// Common variables
 			enrolments: [],
 			searchQuery: "",
+			// Data-iterator variables
 			filterToggle: false,
 			expandToggle: false,
 			expand: [],
 			page: 1,
-			itemsPerPage: 12
+			itemsPerPage: 12,
+			// Delete pop-up variables
+			dialog: false,
+			clickedEnrolment: {},
+			clickedIndex: null
 		}
 	},
 	computed:{
@@ -142,7 +180,7 @@ export default {
 		},
 		numberOfPages () {
 			return Math.ceil(this.filtered.length / this.itemsPerPage)
-		},
+		}
 	},
 	mounted(){
 		this.getData()
@@ -180,8 +218,42 @@ export default {
 				},
 			})
 		},
-		del(){
-		
+		delDialog(enrolment, index){
+			// Show dialogue box
+			this.dialog = !this.dialog
+			// Assign clickedEnrolment to the value of the clicked enrolment's data
+			this.clickedEnrolment = enrolment
+			console.log("delDialog(enrolment):", enrolment)
+			// Assign clickedIndex to the value of the clicked course's index in array
+			this.clickedIndex = this.realIndex(index)
+			console.log("delDialog(index):", this.realIndex(index))
+			
+		},
+		del(enrolment, index){
+			console.log("del() Enrolment data: ", enrolment)
+			console.log("del() Index data: ", index)
+			let token = localStorage.getItem('token')
+			axios
+			.delete(`enrolments/${enrolment.id}`,
+			{
+				headers: {
+					"Authorization" : `Bearer ${token}`
+				}
+			})
+			.then(response => {
+					console.log("del() response: ", response.data.status)
+					this.enrolments.splice(index, 1)
+					alert(`Enrolment with course: ${enrolment.course.title} / lecturer ${enrolment.lecturer.name} has been deleted successfully!`)
+				}
+			)
+			.catch(error => {
+				console.log("del() error caught: ", error)
+				alert(`Enrolment with course: ${enrolment.course.title} / lecturer ${enrolment.lecturer.name} failed to be deleted.`)
+				}
+			)
+		},
+		add(){
+			this.$router.push({ name: 'Add Enrolment' })
 		},
 		nextPage () {
 			if (this.page + 1 <= this.numberOfPages) this.page += 1
@@ -189,6 +261,17 @@ export default {
 		formerPage () {
 			if (this.page - 1 >= 1) this.page -= 1
 		},
+		// Had to figure this function out so the returned index from the data iterator would match this.enrolments
+		// For example, the first item on page 3 would return index 0, not index 24..
+		// To fix this you add the index to the amount of items per page mutliplied by one less than the current page
+		// First item, first page = (0 * 12) + 0 = 0
+		// First item, second page = (1 * 12) + 0 = 12
+		// Third item, third page = (3 * 12) + 3 = 39
+		// and so on...
+		realIndex(index){
+			let returned = index + (this.page -1) * this.itemsPerPage
+			return returned
+		}
 	}
 };
 </script>

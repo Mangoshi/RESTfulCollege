@@ -30,9 +30,6 @@
 			</div>
 		</v-row>
 		<v-divider class="mb-5"></v-divider>
-		<!-- TO-DO: -->
-		<!-- Figure out pagination with data iterators -->
-		<!-- Maybe figure out their own sorting & filtering methods -->
 		<v-data-iterator
 			:items="filtered"
 			item-key="id"
@@ -65,9 +62,9 @@
 							></v-switch>
 							<v-divider></v-divider>
 							<v-item-group class="d-flex justify-space-between btnGroup pa-2">
-								<v-btn class="v-btn--outlined viewBtn" @click="view(lecturer)">View</v-btn>
-								<v-btn class="v-btn--outlined editBtn" @click="edit(lecturer)">Edit</v-btn>
-								<v-btn class="v-btn--outlined deleteBtn" @click="del(lecturer)">Delete</v-btn>
+								<v-btn class="v-btn--outlined viewBtn" @click="view(item)">View</v-btn>
+								<v-btn class="v-btn--outlined editBtn" @click="edit(item)">Edit</v-btn>
+								<v-btn class="v-btn--outlined deleteBtn" @click="del(item)">Delete</v-btn>
 							</v-item-group>
 							<v-divider></v-divider>
 							<v-list
@@ -180,6 +177,9 @@ export default {
 		},
 		del(){
 		
+		},
+		add(){
+			this.$router.push({ name: 'Add Lecturer' })
 		},
 		nextPage () {
 			if (this.page + 1 <= this.numberOfPages) this.page += 1
