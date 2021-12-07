@@ -30,20 +30,19 @@
 						v-model="lecturer.address"
 						color="accent"
 						label="Address"
+						auto-grow
 						readonly
 					></v-textarea>
 				</v-col>
-				<!-- 
-				<v-col cols="12" md="12" v-for="enrolment in lecturer.enrolments" :key="enrolment.id">
-					<v-checkbox
-						:label="enrolment.course.title"
-						color="accent"
-						value="1"
-						readonly
-						>
-					</v-checkbox>
+			</v-row>
+				<h3 class="ml-3 mb-5">Enrolments</h3>
+			<v-row class="mb-4">
+				<v-col cols="12" md="6" lg="4" xl="3" v-for="enrolment in lecturer.enrolments" :key="enrolment.id">
+					<v-card elevation="3" shaped>
+						<v-card-title>{{enrolment.course.title}}</v-card-title>
+						<v-card-subtitle>{{enrolment.status}}</v-card-subtitle>
+					</v-card>
 				</v-col> 
-				-->
 			</v-row>
 			<v-row>
 				<v-spacer></v-spacer>
