@@ -64,9 +64,19 @@ export default new Router({
 			component: () => import("./pages/lecturers/Index.vue")
 		},
 		{
+			path: "/lecturers/add",
+			name: "Add Lecturer",
+			component: () => import("./pages/lecturers/Add.vue")
+		},
+		{
 			path: "/lecturers/:id",
 			name: "Lecturer Viewer",
 			component: () => import("./pages/lecturers/Show.vue")
+		},
+		{
+			path: "/lecturers/edit/:id",
+			name: "Lecturer Editor",
+			component: () => import("./pages/lecturers/Edit.vue")
 		},
 	]
 });

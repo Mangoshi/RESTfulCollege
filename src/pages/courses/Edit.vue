@@ -122,7 +122,7 @@ export default {
 				}
 			})
 			.then(response =>{
-				console.log(response.data)
+				console.log("submitForm() response: ", response.data.data)
 				this.$router.push({
 					name: "Course Viewer",
                     params: {
@@ -130,9 +130,9 @@ export default {
                     }
 				})
 			})
-			.catch(err => {
-				console.log(err)
-				console.log(err.response.data)
+			.catch(error => {
+				console.log("submitForm() error message: ", error.response.data.message)
+				console.log("All error data: ", error)
 			})
 		},
 		cancelForm(){

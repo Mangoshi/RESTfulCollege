@@ -7,7 +7,7 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
-			<v-btn class="addBtn mt-4 float-right">Add</v-btn>
+			<v-btn class="addBtn mr-3 mt-4 float-right" @click="add()">Add</v-btn>
 		</v-row>
 		<v-divider class="mt-3"></v-divider>
 		<v-row align-content="space-between">
@@ -71,26 +71,26 @@
 								v-if="isExpanded(item)"
 								dense
 								>
+								<v-list-item-subtitle class="ml-4 accent--text">ID</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>ID:</v-list-item-content>
 									<v-list-item-content class="align-end">
 										{{ item.id }}
 									</v-list-item-content>
 								</v-list-item>
+								<v-list-item-subtitle class="ml-4 accent--text">Phone</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>Phone:</v-list-item-content>
 									<v-list-item-content class="align-end">
 										{{ item.phone }}
 									</v-list-item-content>
 								</v-list-item>
+								<v-list-item-subtitle class="ml-4 accent--text">Email</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>Email:</v-list-item-content>
 									<v-list-item-content class="align-end">
 										{{ item.email }}
 									</v-list-item-content>
 								</v-list-item>
+								<v-list-item-subtitle class="ml-4 accent--text">Address</v-list-item-subtitle>
 								<v-list-item>
-									<v-list-item-content>Address:</v-list-item-content>
 									<v-list-item-content class="align-end">
 										{{ item.address }}
 									</v-list-item-content>

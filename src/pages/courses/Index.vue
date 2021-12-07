@@ -7,7 +7,7 @@
 				color="accent"
 				v-model="searchQuery">
 			</v-text-field>
-			<v-btn class="addBtn mt-4 float-right" @click="add()">Add</v-btn>
+			<v-btn class="addBtn mr-3 mt-4 float-right" @click="add()">Add</v-btn>
 		</v-row>
 		<v-row>
 			<v-col
