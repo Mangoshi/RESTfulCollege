@@ -41,7 +41,7 @@
 			<template v-slot:default="{ items, isExpanded, expand }">
 				<v-row>
 					<v-col
-						v-for="item in items"
+						v-for="(item, index) in items"
 						:key="item.id"
 						cols="12"
 						sm="6"
@@ -64,7 +64,7 @@
 							<v-item-group class="d-flex justify-space-between btnGroup pa-2">
 								<v-btn class="v-btn--outlined viewBtn" @click="view(item)">View</v-btn>
 								<v-btn class="v-btn--outlined editBtn" @click="edit(item)">Edit</v-btn>
-								<v-btn class="v-btn--outlined deleteBtn" @click="del(item)">Delete</v-btn>
+								<v-btn class="v-btn--outlined deleteBtn" @click="delDialog(item, index)">Delete</v-btn>
 							</v-item-group>
 							<v-divider></v-divider>
 							<v-list
@@ -99,6 +99,23 @@
 						</v-card>
 					</v-col>
 				</v-row>
+				<v-row justify="center" v-if="dialog">
+					<v-dialog v-model="dialog" persistent max-width="290">
+						<v-card>
+							<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
+							<v-card-text>This will permanently delete {{ clickedLecturer.name }} from the API...</v-card-text>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn color="green darken-1" text @click="dialog = false">
+									Go back!
+								</v-btn>
+								<v-btn color="red darken-1" text @click="dialog = false, del(clickedLecturer, clickedIndex)">
+									Delete it! 
+								</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
+				</v-row>
 			</template>
 		</v-data-iterator>
 	</v-container>
@@ -119,7 +136,11 @@ export default {
 			expandToggle: false,
 			expand: [],
 			page: 1,
-			itemsPerPage: 12
+			itemsPerPage: 12,
+			// Delete pop-up variables
+			dialog: false,
+			clickedLecturer: {},
+			clickedIndex: null
 		}
 	},
 	computed:{
@@ -175,8 +196,36 @@ export default {
 				},
 			})
 		},
-		del(){
-		
+		delDialog(lecturer, index){
+			this.dialog = !this.dialog
+			this.clickedLecturer = lecturer
+			console.log("delDialog(lecturer):", lecturer)
+			this.clickedIndex = this.realIndex(index)
+			console.log("delDialog(index):", this.realIndex(index))
+			
+		},
+		del(lecturer, index){
+			console.log("del() Lecturer data: ", lecturer)
+			console.log("del() Index data: ", index)
+			let token = localStorage.getItem('token')
+			axios
+			.delete(`lecturers/${lecturer.id}`,
+			{
+				headers: {
+					"Authorization" : `Bearer ${token}`
+				}
+			})
+			.then(response => {
+					console.log("del() response: ", response.data.status)
+					this.lecturers.splice(index, 1)
+					alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
+				}
+			)
+			.catch(error => {
+				console.log("del() error caught: ", error)
+				alert(`Lecturer ${lecturer.name} failed to be deleted.`)
+				}
+			)
 		},
 		add(){
 			this.$router.push({ name: 'Add Lecturer' })
@@ -187,6 +236,10 @@ export default {
 		formerPage () {
 			if (this.page - 1 >= 1) this.page -= 1
 		},
+		realIndex(index){
+			let returned = index + (this.page -1) * this.itemsPerPage
+			return returned
+		}
 	}
 };
 </script>
