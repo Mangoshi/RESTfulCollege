@@ -48,6 +48,23 @@
 				</v-col>
 			</v-row>
 			<v-row>
+				<v-col>
+					<small>
+						Created:
+						{{ enrolmentCreated.toLocaleTimeString() }}
+						{{ enrolmentCreated.toLocaleDateString() }}
+					</small>
+				</v-col>
+				<v-spacer></v-spacer>
+				<v-col class="d-flex flex-column align-end">
+					<small>
+						Updated:
+						{{ enrolmentUpdated.toLocaleTimeString() }}
+						{{ enrolmentUpdated.toLocaleDateString() }}
+					</small>
+				</v-col>
+			</v-row>
+			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
 					<v-btn block color="accent" class="black--text" @click="submitForm()">
@@ -89,7 +106,9 @@ export default {
 				{ value: 'assigned', text: 'Assigned' },
 				{ value: 'associate', text: 'Associate' },
 				{ value: 'career_break', text: 'Career Break' }
-			]
+			],
+			enrolmentCreated: Date,
+			enrolmentUpdated: Date,
 		}
 	},
 	mounted(){
@@ -115,6 +134,8 @@ export default {
 						this.form.date = enrolment.date
 						this.form.time = enrolment.time
 						this.form.status = enrolment.status
+						this.enrolmentCreated = new Date(enrolment.created_at)
+						this.enrolmentUpdated = new Date(enrolment.updated_at)
 					}
 				)
 				.catch(error => console.log("getData() error caught: ", error))

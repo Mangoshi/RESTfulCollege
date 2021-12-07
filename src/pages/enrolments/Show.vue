@@ -45,6 +45,23 @@
 				</v-col>
 			</v-row>
 			<v-row>
+				<v-col>
+					<small>
+						Created:
+						{{ enrolmentCreated.toLocaleTimeString() }}
+						{{ enrolmentCreated.toLocaleDateString() }}
+					</small>
+				</v-col>
+				<v-spacer></v-spacer>
+				<v-col class="d-flex flex-column align-end">
+					<small>
+						Updated:
+						{{ enrolmentUpdated.toLocaleTimeString() }}
+						{{ enrolmentUpdated.toLocaleDateString() }}
+					</small>
+				</v-col>
+			</v-row>
+			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
 					<v-btn block color="black" class="accent--text" @click="backToAll()">
@@ -66,7 +83,9 @@ export default {
 	},
 	data() {
 		return {
-			enrolment: {}
+			enrolment: {},
+			enrolmentCreated: Date,
+			enrolmentUpdated: Date,
 		}
 	},
 	mounted() {
@@ -84,6 +103,8 @@ export default {
 			.then(response => {
 				console.log("getData() response: ", response.data.data)
 				this.enrolment = response.data.data
+				this.enrolmentCreated = new Date(this.enrolment.created_at)
+				this.enrolmentUpdated = new Date(this.enrolment.updated_at)
 			})
 			.catch(error => console.log("getData() error caught: ", error))
 		},
