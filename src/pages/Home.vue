@@ -22,23 +22,27 @@
 						class="login"
 					>
 					<!--Figure out how to use RGBA values with theme toggle...-->
-						<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.7)"> 
+						<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)"> 
 							<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
 							<h2 class="white--text unselectable">RESTful College</h2>
-							<v-form>
+							<v-form v-model="valid">
 								<v-text-field 
-								dark 
+								dark
+								required
 								color="accent"
 								type="email"
 								v-model="form.email"
 								placeholder="email"
+								:rules="emailRules"
 								/>
 								<v-text-field 
-								dark 
+								dark
+								required
 								color="accent"
 								type="password"
 								v-model="form.password"
 								placeholder="password"
+								:rules="passwordRules"
 								/>
 							</v-form>
 						<br>
@@ -74,15 +78,27 @@ export default {
 	components: {},
 	data(){
 		return{
+			// Form data
 			form: {
 				email: "",
 				password: "",
-				
 			},
+			// Time data
 			currentTime: "",
 			currentDate: "",
+			// Image data
 			photoHD: "",
 			photoSD: "",
+			// Form validation data
+			valid: false,
+			emailRules: [
+				v => !!v || 'E-mail is required',
+				v => /.+@.+/.test(v) || 'E-mail must be valid',
+			],
+			passwordRules: [
+				v => !!v || 'Password is required',
+				v => v.length >= 5 || 'Password must be more than 5 characters long',
+			],
 		}
 	},
 	created() {
@@ -95,12 +111,10 @@ export default {
 		...mapActions(['login']),
 		getNow: function() {
 			const today = new Date();
-			this.minutes = this.checkSingleDigit(today.getMinutes())
-			this.seconds = this.checkSingleDigit(today.getSeconds())
-
+			let minutes = this.checkSingleDigit(today.getMinutes())
+			let seconds = this.checkSingleDigit(today.getSeconds())
 			const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-			const time = today.getHours() + ":" + this.minutes + ":" + this.seconds;
-
+			const time = today.getHours() + ":" + minutes + ":" + seconds;
 			this.currentDate = date;
 			this.currentTime = time;
 		},
