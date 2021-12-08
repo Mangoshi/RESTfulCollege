@@ -1,13 +1,15 @@
 <template >
+	<!-- Background image for login / home -->
 	<v-img
-		lazy-src="https://picsum.photos/id/11/10/6"
 		height="100%"
 		max-height="100%"
+		width="100%"
 		max-width="100%"
-		src="https://picsum.photos/id/12/3840/2160"
+		:lazy-src="this.photoSD"
+		:src="this.photoHD"
 	>
 		<v-container>
-			
+			<!-- If user is not logged in -->
 			<div v-if="!loggedIn">
 				<v-row>
 					<v-spacer></v-spacer>
@@ -17,13 +19,28 @@
 						md="8"
 						lg="6"
 						xl="4"
+						class="login"
 					>
-						<v-card class="centered pa-5">
-							<v-icon style="width:100%; font-size: 10em;">mdi-school</v-icon>
-							<h2>RESTful College</h2>
-						<v-text-field color="accent" type="email" v-model="form.email" placeholder="email" />
-						<br>
-						<v-text-field color="accent" type="password" v-model="form.password" placeholder="password" />
+					<!--Figure out how to use RGBA values with theme toggle...-->
+						<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.7)"> 
+							<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
+							<h2 class="white--text unselectable">RESTful College</h2>
+							<v-form>
+								<v-text-field 
+								dark 
+								color="accent"
+								type="email"
+								v-model="form.email"
+								placeholder="email"
+								/>
+								<v-text-field 
+								dark 
+								color="accent"
+								type="password"
+								v-model="form.password"
+								placeholder="password"
+								/>
+							</v-form>
 						<br>
 						<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
 						</v-card>
@@ -31,6 +48,7 @@
 					<v-spacer></v-spacer>
 				</v-row>
 			</div>
+			<!-- If user is logged in -->
 			<div v-else class="welcome">
 				<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
 				<div class="centered">
@@ -49,6 +67,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import axios from '@/config/college.js'
 
 export default {
 	name: "Home",
@@ -62,10 +81,15 @@ export default {
 			},
 			currentTime: "",
 			currentDate: "",
+			photoHD: "",
+			photoSD: "",
 		}
 	},
 	created() {
 		setInterval(this.getNow, 1000);
+	},
+	mounted(){
+		this.getBackgroundImage()
 	},
 	methods: {
 		...mapActions(['login']),
@@ -82,6 +106,24 @@ export default {
 		},
 		checkSingleDigit(digit){
 			return ('0' + digit).slice(-2)
+		},
+		randomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min)
+		},
+		getBackgroundImage(){
+			// Pexels Request //
+            const PEXELS_URL = `https://api.pexels.com/v1/search?query=landscape&per_page=20&orientation=landscape`
+            const PEXELS_TOKEN = '563492ad6f91700001000001660dc6de6e62494da4a3601ccfc6ecc3'
+            axios
+			.get(PEXELS_URL, { headers: {"Authorization" : `Bearer ${PEXELS_TOKEN}`} })
+			.then(pexels => {
+				console.log("Pexels data: ", pexels.data)
+				let photoIndex = this.randomInt(0,19)
+				console.log("Random Photo Index: ", photoIndex)
+				this.photoHD = pexels.data.photos[photoIndex].src.original
+				this.photoSD = pexels.data.photos[photoIndex].src.medium
+			})
+			.catch(error => console.log("Pexels error: ", error))
 		}
 	},
 	computed: {
@@ -94,11 +136,14 @@ export default {
 	.centered{
 		text-align: center;
 	}
+	.login{
+		margin-top: 2vw;
+	}
 	.welcome{
 		color: white;
 		text-shadow: 2px 2px 2px #000;
 		font-size: 125%;
-		margin-top: 15vw;
+		margin-top: 12vw;
 		user-select: none;
 	}
 </style>

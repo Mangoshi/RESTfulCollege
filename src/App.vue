@@ -57,7 +57,7 @@
 				<!---->
 				<v-spacer></v-spacer>
 				<!---->
-				<label for="v-switch" class="mr-5">dark mode: {{ switchLabel }}</label>
+				<label for="v-switch" class="mr-5 unselectable darkModeText">dark mode: {{ switchLabel }}</label>
 				<v-switch 
 					:value="darkMode" 
 					@change="toggleDarkMode"
@@ -147,6 +147,12 @@ export default {
 
 <style>
 
+/* Utility Classes */
+
+	.unselectable{
+		user-select: none;
+	}
+
 /* Font Classes */
 
 	.spacemono{
@@ -166,7 +172,7 @@ export default {
         color: var(--v-accent) !important;
     }
 
-/* RESTful College navbar title styling */
+/* Navbar styling */
 
 	.navTitle{
 		font-size: 1.5em !important;
