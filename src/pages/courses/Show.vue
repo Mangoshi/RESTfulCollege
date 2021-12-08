@@ -83,9 +83,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "CourseView",
-	components: {
-		
-	},
+	title: `Course Viewer • RESTful College`,
 	data(){
 		return{
 			course: {}

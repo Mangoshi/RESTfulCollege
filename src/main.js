@@ -1,8 +1,17 @@
+// Default imports
 import Vue from "vue";
 import App from "./App.vue";
+
+// Vue libraries
 import router from "./router";
 import store from "./store"
-import vuetify from './plugins/vuetify.js' // path to vuetify export
+
+// Vue mixins
+import titleMixin from './mixins/titleMixin'
+Vue.mixin(titleMixin)
+
+// Vue plugins
+import vuetify from './plugins/vuetify.js'
 
 Vue.config.productionTip = false;
 

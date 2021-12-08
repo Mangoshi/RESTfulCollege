@@ -53,7 +53,8 @@
 import axios from '@/config/college.js'
 
 export default {
-	name: "LecturerView",
+	name: "LecturerEdit",
+	title: `Lecturer Editor • RESTful College`,
 	components: {
 		
 	},

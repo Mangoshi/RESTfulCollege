@@ -141,6 +141,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "EnrolmentsIndex",
+	title: `Enrolments • RESTful College`,
 	components: {
 		
 	},

@@ -90,9 +90,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "EnrolmentView",
-	components: {
-
-	},
+	title: `Enrolment Viewer • RESTful College`,
 	data() {
 		return {
 			enrolment: {},

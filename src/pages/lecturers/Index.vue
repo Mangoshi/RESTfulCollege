@@ -126,6 +126,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "LecturersIndex",
+	title: `Lecturers • RESTful College`,
 	components: {
 		
 	},

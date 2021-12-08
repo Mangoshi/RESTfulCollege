@@ -74,6 +74,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "Home",
+	title: 'RESTful College',
 	components: {},
 	data(){
 		return{

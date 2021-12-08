@@ -87,6 +87,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "EnrolmentEdit",
+	title: `Enrolment Editor • RESTful College`,
 	components: {
 		
 	},

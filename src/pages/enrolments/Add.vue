@@ -71,94 +71,92 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "EnrolmentAdd",
-		components: {
-
-		},
-		data() {
-			return {
-				form: {
-					course_id: '',
-					lecturer_id: '',
-					date: '',
-					time: '',
-					status: '',
-				},
-				courses: [],
-				lecturers: [],
-				statuses: [
-					{ value:'interested', text:'Interested' },
-					{ value: 'assigned', text: 'Assigned' },
-					{ value: 'associate', text: 'Associate' },
-					{ value: 'career_break', text: 'Career Break' }
-				]
-			}
-		},
-		mounted() {
-			this.getCourses(),
-			this.getLecturers()
-		},
-		methods: {
-			backToAll() {
-				this.$router.push({
-					name: 'All Enrolments'
-				})
+	title: `Add Enrolment • RESTful College`,
+	data() {
+		return {
+			form: {
+				course_id: '',
+				lecturer_id: '',
+				date: '',
+				time: '',
+				status: '',
 			},
-			submitForm() {
-				console.log("Course ID:" + this.form.course_id)
-				console.log("Lecturer ID:" + this.form.lecturer_id)
-				let token = localStorage.getItem('token')
-				axios
-				.post(`enrolments`, this.form, {
-					headers: {
-						"Authorization": `Bearer ${token}`,
-						"Content-Type": 'text/json'
-					}
-				})
-				.then(response => {
-					console.log("submitForm() response: ", response.data.data)
-					this.$router.push({
-						name: "All Enrolments"
-					})
-				})
-				.catch(error => {
-					console.log("submitForm() error message: ", error.response.data.message)
-					console.log("All error data: ", error)
-				})
-			},
-			getCourses() {
-				let token = localStorage.getItem('token')
-				axios
-				.get(`courses`, {
-					headers: {
-						"Authorization": `Bearer ${token}`
-					}
-				})
-				.then(response => {
-					console.log("getCourses() response: ", response.data.data)
-					this.courses = response.data.data
-				})
-				.catch(error => {
-					console.log("getCourses() error message: ", error.response.data.message)
-					console.log("All error data: ", error)
-				})
-			},
-			getLecturers() {
-				let token = localStorage.getItem('token')
-				axios
-				.get(`lecturers`, {
-					headers: {
-						"Authorization": `Bearer ${token}`
-					}
-				})
-				.then(response => {
-					console.log("getLecturers() response: ", response.data.data)
-					this.lecturers = response.data.data
-				})
-				.catch(error => {
-					console.log("getLecturers() error message: ", error.response.data.message)
-					console.log("All error data: ", error)
-				})
-			}
+			courses: [],
+			lecturers: [],
+			statuses: [
+				{ value:'interested', text:'Interested' },
+				{ value: 'assigned', text: 'Assigned' },
+				{ value: 'associate', text: 'Associate' },
+				{ value: 'career_break', text: 'Career Break' }
+			]
 		}
-	};
+	},
+	mounted() {
+		this.getCourses(),
+		this.getLecturers()
+	},
+	methods: {
+		backToAll() {
+			this.$router.push({
+				name: 'All Enrolments'
+			})
+		},
+		submitForm() {
+			console.log("Course ID:" + this.form.course_id)
+			console.log("Lecturer ID:" + this.form.lecturer_id)
+			let token = localStorage.getItem('token')
+			axios
+			.post(`enrolments`, this.form, {
+				headers: {
+					"Authorization": `Bearer ${token}`,
+					"Content-Type": 'text/json'
+				}
+			})
+			.then(response => {
+				console.log("submitForm() response: ", response.data.data)
+				this.$router.push({
+					name: "All Enrolments"
+				})
+			})
+			.catch(error => {
+				console.log("submitForm() error message: ", error.response.data.message)
+				console.log("All error data: ", error)
+			})
+		},
+		getCourses() {
+			let token = localStorage.getItem('token')
+			axios
+			.get(`courses`, {
+				headers: {
+					"Authorization": `Bearer ${token}`
+				}
+			})
+			.then(response => {
+				console.log("getCourses() response: ", response.data.data)
+				this.courses = response.data.data
+			})
+			.catch(error => {
+				console.log("getCourses() error message: ", error.response.data.message)
+				console.log("All error data: ", error)
+			})
+		},
+		getLecturers() {
+			let token = localStorage.getItem('token')
+			axios
+			.get(`lecturers`, {
+				headers: {
+					"Authorization": `Bearer ${token}`
+				}
+			})
+			.then(response => {
+				console.log("getLecturers() response: ", response.data.data)
+				this.lecturers = response.data.data
+			})
+			.catch(error => {
+				console.log("getLecturers() error message: ", error.response.data.message)
+				console.log("All error data: ", error)
+			})
+		}
+	}
+};
 </script>

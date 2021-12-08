@@ -89,9 +89,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "CourseEdit",
-	components: {
-		
-	},
+	title: `Course Editor • RESTful College`,
 	data(){
 		return{
 			form: {

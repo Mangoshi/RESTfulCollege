@@ -60,9 +60,7 @@ import axios from '@/config/college.js'
 
 export default {
 	name: "CoursesIndex",
-	components: {
-		
-	},
+	title: `Courses • RESTful College`,
 	data(){
 		return{
 			// Common variables
