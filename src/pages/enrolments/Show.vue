@@ -64,8 +64,14 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
+					<v-btn block color="accent" class="black--text" @click="back()">
+						Back
+					</v-btn>
+				</v-col>
+				<v-spacer></v-spacer>
+				<v-col cols="2" md="2">
 					<v-btn block color="black" class="accent--text" @click="backToAll()">
-						Back to Enrolments
+						Enrolments
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
@@ -112,6 +118,9 @@ export default {
 			this.$router.push({
 				name: 'All Enrolments'
 			})
+		},
+		back(){
+			this.$router.go(-1)
 		}
 	}
 };

@@ -44,11 +44,34 @@
 					></v-textarea>
 				</v-col>
 			</v-row>
+				<h3 class="ml-3 mb-5">Enrolments</h3>
+			<v-row class="mb-4">
+				<v-col cols="12" md="6" lg="4" xl="3" v-for="enrolment in course.enrolments" :key="enrolment.id">
+					<v-card elevation="3" shaped>
+						<v-card-title>
+								<router-link :to="{
+									name: 'Enrolment Viewer', 
+									params:{ id: enrolment.id }
+									}"
+									>
+									{{enrolment.lecturer.name}}
+								</router-link>
+							</v-card-title>
+						<v-card-subtitle>{{enrolment.status}}</v-card-subtitle>
+					</v-card>
+				</v-col> 
+			</v-row>
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
+					<v-btn block color="accent" class="black--text" @click="back()">
+						Back
+					</v-btn>
+				</v-col>
+				<v-spacer></v-spacer>
+				<v-col cols="2" md="2">
 					<v-btn block color="black" class="accent--text" @click="backToAll()">
-						Back to Courses
+						Courses
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
@@ -91,6 +114,9 @@ export default {
 		},
 		backToAll(){
 			this.$router.push({ name: 'All Courses'})
+		},
+		back(){
+			this.$router.go(-1)
 		}
 	}
 };

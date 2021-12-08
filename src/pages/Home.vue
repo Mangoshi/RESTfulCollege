@@ -21,7 +21,6 @@
 						xl="4"
 						class="login"
 					>
-					<!--Figure out how to use RGBA values with theme toggle...-->
 						<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)"> 
 							<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
 							<h2 class="white--text unselectable">RESTful College</h2>
@@ -53,7 +52,7 @@
 				</v-row>
 			</div>
 			<!-- If user is logged in -->
-			<div v-else class="welcome">
+			<v-card v-else class="centered welcome unselectable white--text pa-5" color="rgb(0, 0, 0, 0.5)"> 
 				<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
 				<div class="centered">
 					{{ currentDate }}
@@ -64,7 +63,7 @@
 				<p class="centered mt-5">
 					You are logged in.
 				</p>
-			</div>
+			</v-card>
 		</v-container>
 	</v-img>
 </template>
@@ -154,10 +153,8 @@ export default {
 		margin-top: 2vw;
 	}
 	.welcome{
-		color: white;
 		text-shadow: 2px 2px 2px #000;
 		font-size: 125%;
 		margin-top: 12vw;
-		user-select: none;
 	}
 </style>

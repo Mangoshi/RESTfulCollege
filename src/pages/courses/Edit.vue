@@ -9,7 +9,10 @@
 						label="Title"
 						hint="The course title"
 						required
+						clearable
+						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
+					<small v-if="errors.title" class="accent--text">{{errors.title[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -18,27 +21,36 @@
 						label="Code"
 						hint="The course code"
 						required
+						clearable
+						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
+					<small v-if="errors.code" class="accent--text">{{errors.code[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
+						type="number"
 						v-model="form.level"
 						color="accent"
 						label="Level"
 						hint="The QQI level of the course"
 						required
-						type="number"
+						clearable
+						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
+					<small v-if="errors.level" class="accent--text">{{errors.level[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
+						type="number"
 						v-model="form.points"
 						color="accent"
 						label="Points Required"
 						hint="The points required to get into the course"
 						required
-						type="number"
+						clearable
+						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
+					<small v-if="errors.points" class="accent--text">{{errors.points[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="12">
 					<v-textarea
@@ -47,7 +59,10 @@
 						label="Description"
 						hint="The description of the course"
 						required
+						clearable
+						clear-icon="mdi-trash-can-outline"
 					></v-textarea>
+					<small v-if="errors.description" class="accent--text">{{errors.description[0]}}</small>
 				</v-col>
 			</v-row>
 			<v-row>
@@ -85,7 +100,8 @@ export default {
 				level: '',
 				points: '',
 				description: '',
-			}
+			},
+			errors: {}
 		}
 	},
 	mounted(){
@@ -131,7 +147,8 @@ export default {
 				})
 			})
 			.catch(error => {
-				console.log("submitForm() error message: ", error.response.data.message)
+				console.log("submitForm() error message: ", error.response.data.errors)
+				this.errors = error.response.data.errors
 				console.log("All error data: ", error)
 			})
 		},
