@@ -75,6 +75,12 @@
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
+				<v-col cols="2" md="2">
+					<v-btn block color="accent" class="black--text" @click="edit()">
+						Edit
+					</v-btn>
+				</v-col>
+				<v-spacer></v-spacer>
 			</v-row>
 	</v-container>
 </template>
@@ -121,7 +127,15 @@ export default {
 		},
 		back(){
 			this.$router.go(-1)
-		}
+		},
+		edit(){
+			this.$router.push({
+				name: 'Enrolment Editor',
+				params:{ 
+					id: this.enrolment.id
+				},
+			})
+		},
 	}
 };
 </script>

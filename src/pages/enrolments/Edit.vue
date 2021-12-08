@@ -67,14 +67,14 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="accent" class="black--text" @click="submitForm()">
-						Submit
+					<v-btn block color="black" class="accent--text" @click="cancelForm()">
+						Cancel
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="black" class="accent--text" @click="cancelForm()">
-						Cancel
+					<v-btn block color="accent" class="black--text" @click="submitForm()">
+						Submit
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>

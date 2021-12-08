@@ -51,16 +51,16 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="accent" class="black--text" @click="submitForm()">
-						Submit
+					<v-btn block color="black" class="accent--text" @click="backToAll()">
+						Enrolments
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="black" class="accent--text" @click="backToAll()">
-						Back to Enrolments
+					<v-btn block color="accent" class="black--text" @click="submitForm()">
+						Submit
 					</v-btn>
-				</v-col>
+				</v-col>				
 				<v-spacer></v-spacer>
 			</v-row>
 	</v-container>

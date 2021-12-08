@@ -34,14 +34,14 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="accent" class="black--text" @click="submitForm()">
-						Submit
+					<v-btn block color="black" class="accent--text" @click="cancelForm()">
+						Cancel
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="black" class="accent--text" @click="backToAll()">
-						Back to Lecturers
+					<v-btn block color="accent" class="black--text" @click="submitForm()">
+						Submit
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
@@ -60,10 +60,10 @@ export default {
 	data(){
 		return{
 			form: {
-				name: 'Fred Fredricson',
-				email: 'fred@gmail.com',
-				phone: '012-345-6789',
-				address: 'Freds House, Fredricksberg, Fuckerson',
+				name: '',
+				email: '',
+				phone: '',
+				address: '',
 				}
 		}
 	},
@@ -111,8 +111,8 @@ export default {
 				console.log("All error data: ", error)
 			})
 		},
-		backToAll(){
-			this.$router.push({ name: 'All Lecturers'})
+		cancelForm(){
+			this.$router.go(-1)
 		}
 	}
 };

@@ -54,14 +54,14 @@
 			<v-row>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="accent" class="black--text" @click="back()">
-						Back
+					<v-btn block color="black" class="accent--text" @click="backToAll()">
+						Lecturers
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
 				<v-col cols="2" md="2">
-					<v-btn block color="black" class="accent--text" @click="backToAll()">
-						Lecturers
+					<v-btn block color="accent" class="black--text" @click="edit()">
+						Edit
 					</v-btn>
 				</v-col>
 				<v-spacer></v-spacer>
@@ -105,9 +105,14 @@ export default {
 		backToAll(){
 			this.$router.push({ name: 'All Lecturers'})
 		},
-		back(){
-			this.$router.go(-1)
-		}
+		edit(){
+			this.$router.push({
+				name: 'Lecturer Editor',
+				params:{ 
+					id: this.lecturer.id
+				},
+			})
+		},
 	}
 };
 </script>
