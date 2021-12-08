@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-			<v-row>
+			<v-row class="mt-10">
 				<v-col cols="12" md="6">
 					<v-text-field
 						v-model="course.title"
@@ -49,14 +49,13 @@
 				<v-col cols="12" md="6" lg="4" xl="3" v-for="enrolment in course.enrolments" :key="enrolment.id">
 					<v-card elevation="3" shaped>
 						<v-card-title>
-								<router-link :to="{
-									name: 'Enrolment Viewer', 
-									params:{ id: enrolment.id }
-									}"
-									>
-									{{enrolment.lecturer.name}}
-								</router-link>
-							</v-card-title>
+							<router-link class="accent--text" :to="{
+								name: 'Enrolment Viewer', 
+								params:{ id: enrolment.id }}"
+								>
+								{{enrolment.lecturer.name}}
+							</router-link>
+						</v-card-title>
 						<v-card-subtitle>{{enrolment.status}}</v-card-subtitle>
 					</v-card>
 				</v-col> 

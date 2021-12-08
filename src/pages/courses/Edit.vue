@@ -1,7 +1,7 @@
 <template>
 	<v-form>
 		<v-container>
-			<v-row>
+			<v-row class="mt-10">
 				<v-col cols="12" md="6">
 					<v-text-field
 						v-model="form.title"
