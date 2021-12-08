@@ -1,11 +1,11 @@
 {
-  "name": "vue-festivals-app",
+  "name": "restful-college",
   "version": "0.1.0",
   "private": true,
   "author": {
-    "name": "Mohammed Che",
-    "email": "mohammed.cherbatji@iadt.ie",
-    "url": "https://iadt.ie/about/staff/mohammed-cherbatji/"
+    "name": "Seán Óg Durack Monks",
+    "email": "mangoshimonks@gmail.com",
+    "url": "https://mangoshi.github.io/"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,8 +15,6 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
-    "bootstrap": "^4.6.0",
-    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
