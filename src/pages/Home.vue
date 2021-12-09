@@ -7,52 +7,52 @@
 		max-width="100%"
 		:lazy-src="this.photoSD"
 		:src="this.photoHD"
-	>
-		<v-container>
-			<!-- If user is not logged in -->
-			<div v-if="!loggedIn">
-				<v-row>
-					<v-spacer></v-spacer>
-					<v-col
-						cols="12"
-						sm="10"
-						md="8"
-						lg="6"
-						xl="4"
-						class="login"
-					>
-						<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)"> 
-							<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
-							<h2 class="white--text unselectable">RESTful College</h2>
-							<v-form v-model="valid">
-								<v-text-field 
-								dark
-								required
-								color="accent"
-								type="email"
-								v-model="form.email"
-								placeholder="email"
-								:rules="emailRules"
-								/>
-								<v-text-field 
-								dark
-								required
-								color="accent"
-								type="password"
-								v-model="form.password"
-								placeholder="password"
-								:rules="passwordRules"
-								/>
-							</v-form>
-						<br>
-						<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
-						</v-card>
-					</v-col>
-					<v-spacer></v-spacer>
-				</v-row>
-			</div>
-			<!-- If user is logged in -->
-			<v-card v-else class="centered welcome unselectable white--text pa-5" color="rgb(0, 0, 0, 0.5)"> 
+		>
+		<!-- If user is not logged in -->
+		<v-container v-if="!loggedIn">
+			<v-row>
+				<v-spacer></v-spacer>
+				<v-col
+					cols="12"
+					sm="10"
+					md="8"
+					lg="6"
+					xl="4"
+					class="login"
+				>
+					<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)"> 
+						<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
+						<h2 class="white--text unselectable">RESTful College</h2>
+						<v-form v-model="valid">
+							<v-text-field 
+							dark
+							required
+							color="accent"
+							type="email"
+							v-model="form.email"
+							placeholder="email"
+							:rules="emailRules"
+							/>
+							<v-text-field 
+							dark
+							required
+							color="accent"
+							type="password"
+							v-model="form.password"
+							placeholder="password"
+							:rules="passwordRules"
+							/>
+						</v-form>
+					<br>
+					<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
+					</v-card>
+				</v-col>
+				<v-spacer></v-spacer>
+			</v-row>
+		</v-container>
+		<!-- If user is logged in -->
+		<v-container v-else class="welcomeContainer">
+			<v-card class="centered welcome unselectable white--text pa-5" color="rgb(0, 0, 0, 0.5)"> 
 				<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
 				<div class="centered">
 					{{ currentDate }}
@@ -157,5 +157,8 @@ export default {
 		text-shadow: 2px 2px 2px #000;
 		font-size: 125%;
 		margin-top: 12vw;
+	}
+	.welcomeContainer{
+		max-width: 600px !important;
 	}
 </style>

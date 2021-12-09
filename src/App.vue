@@ -70,7 +70,9 @@
 
 			<!-- Router View -->
 			<v-main>
-				<router-view></router-view>
+				<transition name="fade" mode="out-in">
+					<router-view></router-view>
+				</transition>
 			</v-main>
 
 			<!-- Footer -->
@@ -247,6 +249,52 @@ export default {
 		color: var(--v-deleteBG) !important;
 		border-color: var(--v-deleteBG) !important;
 		background-color: var(--v-deleteFG) !important;
+	}
+
+/* Transition Styling */
+
+	.fade-enter-active {
+		-webkit-animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+		animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	}
+
+	.fade-leave-active {
+		-webkit-animation: fade-out 0.5s ease-out both;
+		animation: fade-out 0.5s ease-out both;
+	}
+
+	@-webkit-keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@-webkit-keyframes fade-out {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	@keyframes fade-out {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
 	}
 
 </style>
