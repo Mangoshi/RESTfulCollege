@@ -12,7 +12,7 @@
 						clearable
 						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
-					<small v-if="errors.title" class="accent--text">{{errors.title[0]}}</small>
+					<small v-if="errors.title" class="unselectable accent--text">{{errors.title[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -24,7 +24,7 @@
 						clearable
 						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
-					<small v-if="errors.code" class="accent--text">{{errors.code[0]}}</small>
+					<small v-if="errors.code" class="unselectable accent--text">{{errors.code[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -37,7 +37,7 @@
 						clearable
 						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
-					<small v-if="errors.level" class="accent--text">{{errors.level[0]}}</small>
+					<small v-if="errors.level" class="unselectable accent--text">{{errors.level[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -50,7 +50,7 @@
 						clearable
 						clear-icon="mdi-trash-can-outline"
 					></v-text-field>
-					<small v-if="errors.points" class="accent--text">{{errors.points[0]}}</small>
+					<small v-if="errors.points" class="unselectable accent--text">{{errors.points[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="12">
 					<v-textarea
@@ -62,7 +62,7 @@
 						clearable
 						clear-icon="mdi-trash-can-outline"
 					></v-textarea>
-					<small v-if="errors.description" class="accent--text">{{errors.description[0]}}</small>
+					<small v-if="errors.description" class="unselectable accent--text">{{errors.description[0]}}</small>
 				</v-col>
 			</v-row>
 			<v-row>

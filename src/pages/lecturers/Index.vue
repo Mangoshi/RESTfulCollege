@@ -52,6 +52,7 @@
 						<v-card>
 							<v-card-title>
 								<h4>{{ item.name }}</h4>
+								<!-- <v-img src="https://100k-faces.glitch.me/random-image"></v-img> -->
 							</v-card-title>
 							<v-switch
 								:input-value="isExpanded(item)"

@@ -9,6 +9,7 @@
 						v-model="form.course_id"
 						color="accent"
 						label="Course"/>
+						<small v-if="errors.course_id" class="unselectable accent--text">{{errors.course_id[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-select
@@ -19,6 +20,7 @@
 						color="accent"
 						label="Lecturer"
 					/>
+						<small v-if="errors.lecturer_id" class="unselectable accent--text">{{errors.lecturer_id[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -27,6 +29,7 @@
 						label="Date"
 						type="date"
 					/>
+						<small v-if="errors.date" class="unselectable accent--text">{{errors.date[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
 					<v-text-field
@@ -35,6 +38,7 @@
 						label="Time"
 						type="time"
 					/>
+						<small v-if="errors.time" class="unselectable accent--text">{{errors.time[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="12">
 					<v-select
@@ -45,6 +49,7 @@
 						color="accent"
 						label="Status"
 					/>
+						<small v-if="errors.status" class="unselectable accent--text">{{errors.status[0]}}</small>
 				</v-col>
 			</v-row>
 			<v-row>
@@ -110,6 +115,7 @@ export default {
 			],
 			enrolmentCreated: Date,
 			enrolmentUpdated: Date,
+			errors: {}
 		}
 	},
 	mounted(){
@@ -192,9 +198,10 @@ export default {
 					}
 				})
 			})
-			.catch(err => {
-				console.log(err)
-				console.log(err.response.data)
+			.catch(error => {
+				console.log(error)
+				this.errors = error.response.data.errors
+				console.log(error.response.data)
 			})
 		},
 		cancelForm(){
