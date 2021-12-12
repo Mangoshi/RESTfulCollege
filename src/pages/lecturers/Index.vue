@@ -50,9 +50,14 @@
 						xl="2"
 						>
 						<v-card>
+							<v-img 
+								:src="`https://avatars.dicebear.com/api/identicon/${item.name}.svg`"
+								height="2em"
+								width="2em"
+								class="float-right"
+							></v-img>
 							<v-card-title>
 								<h4>{{ item.name }}</h4>
-								<!-- <v-img src="https://100k-faces.glitch.me/random-image"></v-img> -->
 							</v-card-title>
 							<v-switch
 								:input-value="isExpanded(item)"
