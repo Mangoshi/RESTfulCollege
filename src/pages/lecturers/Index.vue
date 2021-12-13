@@ -51,11 +51,12 @@
 						>
 						<v-card>
 							<v-img 
-								:src="`https://avatars.dicebear.com/api/identicon/${item.name}.svg`"
-								height="2em"
-								width="2em"
+								:src="`https://avatars.dicebear.com/api/${item.gender}/${item.realName}.svg`"
+								height="3em"
+								width="3em"
 								class="float-right"
 							></v-img>
+							
 							<v-card-title>
 								<h4>{{ item.name }}</h4>
 							</v-card-title>
@@ -144,6 +145,7 @@ export default {
 			expand: [],
 			page: 1,
 			itemsPerPage: 12,
+			genders: [],
 			// Delete pop-up variables
 			dialog: false,
 			clickedLecturer: {},
@@ -181,8 +183,14 @@ export default {
 				}
 			})
 			.then(response => {
-					console.log("getData() response: ", response.data.data)
-					this.lecturers = response.data.data
+				console.log("getData() response: ", response.data.data)
+				let lecturers = response.data.data
+				lecturers.forEach((lecturer, index) => {
+					console.log(index, ": ", lecturer.name)
+					lecturer.realName = this.nameProcessor(lecturer.name)
+					lecturer.gender = this.genderCheck(lecturer.realName)
+					})
+				this.lecturers = lecturers
 				}
 			)
 			.catch(error => console.log("getData() error caught: ", error))
@@ -246,6 +254,39 @@ export default {
 		realIndex(index){
 			let returned = index + (this.page -1) * this.itemsPerPage
 			return returned
+		},
+		nameProcessor(name){
+			// RegEx which reads "select everything until you find a period followed by a space, including the period and space"
+			let realName = name.replace(/(.*)\. /, '')
+			console.log(`nameProcessor(${name}) => ${realName}`)
+			// this.genderCheck(realName)
+			return realName
+		},
+		genderCheck(name){
+			let nameSplit = name.split(' ')
+			let firstName = nameSplit[0]
+			let gender = axios
+			.get(`https://api.genderize.io?name=${firstName}`)
+			.then(response => {
+					console.log(`genderCheck(${firstName}) response: ${response.data.gender}`)
+					response.data.gender
+				}
+			)
+			.catch(error => console.log("genderCheck() error caught: ", error))
+			return gender
+		},
+		urlGenerator(name){
+			let processedName = this.nameProcessor(name)
+			console.log("urlGenerator() processedName: ",processedName)
+
+			let nameSplit = processedName.split(' ')
+			let firstName = nameSplit[0]
+			let gender = this.genderCheck(firstName).then(function(response){
+				console.log("urlGenerator() gender: ", response)
+				let genderName = gender+"/"+name
+				console.log(`https://avatars.dicebear.com/api/${genderName}.svg`)
+				return genderName
+			})			
 		}
 	}
 };
