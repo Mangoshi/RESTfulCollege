@@ -145,7 +145,6 @@ export default {
 			expand: [],
 			page: 1,
 			itemsPerPage: 12,
-			genders: [],
 			// Delete pop-up variables
 			dialog: false,
 			clickedLecturer: {},
@@ -189,8 +188,9 @@ export default {
 				lecturers.forEach((lecturer, index) => {
 					console.log(index, ": ", lecturer.name)
 					lecturer.realName = this.nameProcessor(lecturer.name)
+					// Hardcoding a gender while rate-limited 
 					if(toggle){
-						lecturer.gender = "female" // Hardcoding a gender while rate-limited 
+						lecturer.gender = "female"
 					} else {
 						lecturer.gender = "male"
 					}
@@ -280,19 +280,6 @@ export default {
 			)
 			.catch(error => console.log("genderCheck() error caught: ", error))
 			return gender
-		},
-		urlGenerator(name){
-			let processedName = this.nameProcessor(name)
-			console.log("urlGenerator() processedName: ",processedName)
-
-			let nameSplit = processedName.split(' ')
-			let firstName = nameSplit[0]
-			let gender = this.genderCheck(firstName).then(function(response){
-				console.log("urlGenerator() gender: ", response)
-				let genderName = gender+"/"+name
-				console.log(`https://avatars.dicebear.com/api/${genderName}.svg`)
-				return genderName
-			})			
 		}
 	}
 };
