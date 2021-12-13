@@ -185,10 +185,16 @@ export default {
 			.then(response => {
 				console.log("getData() response: ", response.data.data)
 				let lecturers = response.data.data
+				let toggle = true
 				lecturers.forEach((lecturer, index) => {
 					console.log(index, ": ", lecturer.name)
 					lecturer.realName = this.nameProcessor(lecturer.name)
-					lecturer.gender = this.genderCheck(lecturer.realName)
+					if(toggle){
+						lecturer.gender = "female" // Hardcoding a gender while rate-limited 
+					} else {
+						lecturer.gender = "male"
+					}
+					toggle = !toggle
 					})
 				this.lecturers = lecturers
 				}
