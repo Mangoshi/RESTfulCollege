@@ -20,32 +20,79 @@
 					xl="4"
 					class="login"
 				>
-					<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)"> 
+
+					<!-- Login Form -->
+					<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)" v-if="formToggle"> 
 						<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
 						<h2 class="white--text unselectable">RESTful College</h2>
-						<v-form v-model="valid">
+						<v-form v-model="loginValid">
 							<v-text-field 
 							dark
 							required
 							color="accent"
 							type="email"
-							v-model="form.email"
+							v-model="loginForm.email"
 							placeholder="email"
 							:rules="emailRules"
 							/>
+							<small v-if="errors.email" class="unselectable accent--text errorMessage">{{errors[0].email}}</small>
 							<v-text-field 
 							dark
 							required
 							color="accent"
 							type="password"
-							v-model="form.password"
+							v-model="loginForm.password"
 							placeholder="password"
 							:rules="passwordRules"
 							/>
+							<small v-if="errors.password" class="align-left unselectable accent--text errorMessage">{{errors.password[0]}}</small>
 						</v-form>
 					<br>
-					<v-btn color="accent" class="secondary--text" @click="login(form)">Login</v-btn>
+					<v-btn color="secondary" class="accent--text mr-2" @click="toggleForm()">Register</v-btn>
+					<v-btn color="accent" class="secondary--text ml-2" @click="login(loginForm)">Login</v-btn>
 					</v-card>
+
+					<!-- Register Form -->
+					<v-card class="centered pa-5" color="rgb(0, 0, 0, 0.8)" v-else> 
+						<v-icon style="width:100%; font-size: 10em;" color="accent">mdi-school</v-icon>
+						<h2 class="white--text unselectable">RESTful College</h2>
+						<v-form v-model="registerValid">
+							<v-text-field 
+							dark
+							required
+							color="accent"
+							type="text"
+							v-model="registerForm.name"
+							placeholder="name"
+							:rules="nameRules"
+							/>
+							<small v-if="errors.name" class="unselectable accent--text errorMessage">{{errors.name[0]}}</small>
+							<v-text-field 
+							dark
+							required
+							color="accent"
+							type="email"
+							v-model="registerForm.email"
+							placeholder="email"
+							:rules="emailRules"
+							/>
+							<small v-if="errors.email" class="unselectable accent--text errorMessage">{{errors.email[0]}}</small>
+							<v-text-field 
+							dark
+							required
+							color="accent"
+							type="password"
+							v-model="registerForm.password"
+							placeholder="password"
+							:rules="passwordRules"
+							/>
+							<small v-if="errors.password" class="unselectable accent--text errorMessage">{{errors.password[0]}}</small>
+						</v-form>
+					<br>
+					<v-btn color="secondary" class="accent--text mr-2" @click="toggleForm()">Login</v-btn>
+					<v-btn color="accent" class="secondary--text ml-2" @click="register(registerForm)">Register</v-btn>
+				</v-card>
+
 				</v-col>
 				<v-spacer></v-spacer>
 			</v-row>
@@ -53,7 +100,7 @@
 		<!-- If user is logged in -->
 		<v-container v-else class="welcomeContainer">
 			<v-card class="centered welcome unselectable white--text pa-5" color="rgb(0, 0, 0, 0.5)"> 
-				<h2 class="mb-5 centered">Welcome to <span class="rc1">REST</span><span class="rc2">ful</span> College</h2>
+				<h2 class="mb-5 centered">Welcome, {{ username }}</h2>
 				<div class="centered">
 					{{ currentDate }}
 				</div>
@@ -79,18 +126,26 @@ export default {
 	data(){
 		return{
 			// Form data
-			form: {
+			loginForm: {
 				email: "",
 				password: "",
 			},
-			// Time data
+			registerForm: {
+				name: "",
+				email: "",
+				password: ""
+			},
+			formToggle: true,
+			// Dashboard data
 			currentTime: "",
 			currentDate: "",
+			username: "",
 			// Image data
 			photoHD: "",
 			photoSD: "",
 			// Form validation data
-			valid: false,
+			loginValid: false,
+			registerValid: false,
 			emailRules: [
 				v => !!v || 'E-mail is required',
 				v => /.+@.+/.test(v) || 'E-mail must be valid',
@@ -99,6 +154,10 @@ export default {
 				v => !!v || 'Password is required',
 				v => v.length >= 5 || 'Password must be more than 5 characters long',
 			],
+			nameRules: [
+				v => !!v || 'Name is required',
+				v => v.length > 1 || 'Name must be more than 1 character long',
+			]
 		}
 	},
 	created() {
@@ -106,9 +165,10 @@ export default {
 	},
 	mounted(){
 		this.getBackgroundImage()
+		// this.getUsername()
 	},
 	methods: {
-		...mapActions(['login']),
+		...mapActions(['login', 'register']),
 		getNow: function() {
 			const today = new Date();
 			let minutes = this.checkSingleDigit(today.getMinutes())
@@ -138,10 +198,34 @@ export default {
 				this.photoSD = pexels.data.photos[photoIndex].src.medium
 			})
 			.catch(error => console.log("Pexels error: ", error))
-		}
+		},
+		toggleForm(){
+			this.formToggle = !this.formToggle
+			// this.errors = []
+		},
+		// getUsername(){
+		// 	if(this.loggedIn){
+		// 		let token = localStorage.getItem('token')
+		// 		axios
+		// 		.get(`user`,
+		// 		{
+		// 			headers: {
+		// 				"Authorization" : `Bearer ${token}`
+		// 			}
+		// 		})
+		// 		.then(response => {
+		// 			console.log(`getUsername() response: ${response.data}`)
+		// 			this.username = response.data.name
+		// 			}
+		// 		)
+		// 		.catch(error => console.log("getUsername() error caught: ", error))		
+		// 	} else {
+		// 		console.log(`getUsername() did nothing because you're not logged in!`)
+		// 	}
+		// }
 	},
 	computed: {
-		...mapState(['loggedIn']),
+		...mapState(['loggedIn', 'errors', 'username'])
 	},
 };
 </script>
@@ -160,5 +244,8 @@ export default {
 	}
 	.welcomeContainer{
 		max-width: 600px !important;
+	}
+	.errorMessage{
+		text-align: left !important;
 	}
 </style>
