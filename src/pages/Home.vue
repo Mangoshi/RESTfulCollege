@@ -100,7 +100,7 @@
 		<!-- If user is logged in -->
 		<v-container v-else class="welcomeContainer">
 			<v-card class="centered welcome unselectable white--text pa-5" color="rgb(0, 0, 0, 0.5)"> 
-				<h2 class="mb-5 centered">Welcome, {{ username }}</h2>
+				<h2 class="mb-5 centered">Welcome, {{ getUsername() }}</h2>
 				<div class="centered">
 					{{ currentDate }}
 				</div>
@@ -139,7 +139,6 @@ export default {
 			// Dashboard data
 			currentTime: "",
 			currentDate: "",
-			username: "",
 			// Image data
 			photoHD: "",
 			photoSD: "",
@@ -165,7 +164,6 @@ export default {
 	},
 	mounted(){
 		this.getBackgroundImage()
-		// this.getUsername()
 	},
 	methods: {
 		...mapActions(['login', 'register']),
@@ -203,29 +201,12 @@ export default {
 			this.formToggle = !this.formToggle
 			// this.errors = []
 		},
-		// getUsername(){
-		// 	if(this.loggedIn){
-		// 		let token = localStorage.getItem('token')
-		// 		axios
-		// 		.get(`user`,
-		// 		{
-		// 			headers: {
-		// 				"Authorization" : `Bearer ${token}`
-		// 			}
-		// 		})
-		// 		.then(response => {
-		// 			console.log(`getUsername() response: ${response.data}`)
-		// 			this.username = response.data.name
-		// 			}
-		// 		)
-		// 		.catch(error => console.log("getUsername() error caught: ", error))		
-		// 	} else {
-		// 		console.log(`getUsername() did nothing because you're not logged in!`)
-		// 	}
-		// }
+		getUsername(){
+			return localStorage.getItem('username')
+		},
 	},
 	computed: {
-		...mapState(['loggedIn', 'errors', 'username'])
+		...mapState(['loggedIn', 'errors'])
 	},
 };
 </script>
