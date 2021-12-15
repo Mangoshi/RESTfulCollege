@@ -16,7 +16,7 @@
 					<v-list-item class="d-flex justify-center mb-5">
 						<v-list-item-avatar 
 							color="primary" 
-							class="secondary--text"
+							class="secondary--text unselectable"
 							>
 							X_X
 						</v-list-item-avatar>

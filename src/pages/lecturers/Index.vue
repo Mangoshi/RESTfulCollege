@@ -107,10 +107,17 @@
 					</v-col>
 				</v-row>
 				<v-row justify="center" v-if="dialog">
-					<v-dialog v-model="dialog" persistent max-width="290">
-						<v-card>
-							<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
-							<v-card-text>This will permanently delete {{ clickedLecturer.name }} from the API...</v-card-text>
+					<v-dialog v-model="dialog" persistent max-width="500">
+						<v-card class="unselectable">
+							<v-card-title class="text-h5 justify-center">Are you sure? &#128556;</v-card-title>
+							<div v-if="hasEnrolments">
+							<v-card-text class="text-center"><span class="text-h4">&#9888;</span></v-card-text>
+							<v-card-text class="text-center"><b>This lecturer has enrolments!</b></v-card-text>
+							<v-card-text class="text-center">This will <i>permanently</i> delete <b>{{ clickedLecturer.name }}</b> and <b>all of their enrolments</b> from the API...</v-card-text>
+							</div>
+							<div v-else>
+							<v-card-text>This will <i>permanently</i> delete <b>{{ clickedLecturer.name }}</b> from the API...</v-card-text>
+							</div>
 							<v-card-actions>
 								<v-spacer></v-spacer>
 								<v-btn color="green darken-1" text @click="dialog = false">
@@ -129,7 +136,7 @@
 </template>
 
 <script>
-import axios from '@/config/college.js'
+import axios from 'axios'
 
 export default {
 	name: "LecturersIndex",
@@ -148,7 +155,8 @@ export default {
 			// Delete pop-up variables
 			dialog: false,
 			clickedLecturer: {},
-			clickedIndex: null
+			clickedIndex: null,
+			hasEnrolments: false
 		}
 	},
 	computed:{
@@ -174,8 +182,9 @@ export default {
 	methods: {
 		getData(){
 			let token = localStorage.getItem('token')
+			let baseURL = 'https://college-api-mo.herokuapp.com/api/'
 			axios
-			.get(`lecturers`,
+			.get(`${baseURL}lecturers`,
 			{
 				headers: {
 					"Authorization" : `Bearer ${token}`
@@ -218,35 +227,87 @@ export default {
 			})
 		},
 		delDialog(lecturer, index){
+			// show dialog
 			this.dialog = !this.dialog
+			// pass clicked lecturer details
 			this.clickedLecturer = lecturer
+			// log clicked lecturer
 			console.log("delDialog(lecturer):", lecturer)
+			// set clickedIndex to the true index in the array (not the index of the array of 12 on that page)
 			this.clickedIndex = this.realIndex(index)
+			// log the real index
 			console.log("delDialog(index):", this.realIndex(index))
-			
+			if(lecturer.enrolments.length !== 0){
+				console.log("delDialog() hasEnrolments=true:", lecturer.enrolments)
+				this.hasEnrolments = true
+			} else {
+				console.log("delDialog() hasEnrolments=false:", lecturer.enrolments)
+				this.hasEnrolments = false
+			}
 		},
 		del(lecturer, index){
+			var outerScope = this
 			console.log("del() Lecturer data: ", lecturer)
 			console.log("del() Index data: ", index)
 			let token = localStorage.getItem('token')
-			axios
-			.delete(`lecturers/${lecturer.id}`,
-			{
-				headers: {
-					"Authorization" : `Bearer ${token}`
-				}
-			})
-			.then(response => {
-					console.log("del() response: ", response.data.status)
-					this.lecturers.splice(index, 1)
-					alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
-				}
-			)
-			.catch(error => {
-				console.log("del() error caught: ", error)
-				alert(`Lecturer ${lecturer.name} failed to be deleted.`)
-				}
-			)
+			let baseURL = 'https://college-api-mo.herokuapp.com/api/'
+			if(lecturer.enrolments.length !== 0){
+				console.log("del() w/enrolments started")
+				let listOfDeleteRequests = lecturer.enrolments.map((enrolment) => axios.delete(`${baseURL}enrolments/${enrolment.id}`, 
+					{ headers: { Authorization: `Bearer ${token}` }}
+				));
+				console.log("listOfDeleteRequests:",listOfDeleteRequests)
+				axios
+				.all(listOfDeleteRequests)
+				// .then(response => {
+				// 	console.log("del() [lecturer enrolments] response: ", response.data.status)
+				// 	console.log("Lecturer's enrolments have been deleted successfully!")
+				// })
+				.then( function() {
+					axios
+					.delete(`${baseURL}lecturers/${lecturer.id}`,
+					{
+						headers: {
+							"Authorization" : `Bearer ${token}`
+						}
+					})
+					.then(response => {
+							console.log("del() [lecturer] response: ", response.data)
+							outerScope.lecturers.splice(index, 1)
+							alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
+						}
+					)
+					.catch(error => {
+						console.log("del() [lecturer] error caught: ", error)
+						alert(`Lecturer ${lecturer.name} failed to be deleted.`)
+						}
+					)
+				})
+				.catch(error => {
+					console.log("del() [lecturer enrolments] error caught: ", error)
+					alert(`Lecturer ${lecturer.name} failed to be deleted.`)
+				})
+			} else {
+				console.log("del() wo/enrolments started")
+				axios
+				.delete(`${baseURL}lecturers/${lecturer.id}`,
+				{
+					headers: {
+						"Authorization" : `Bearer ${token}`
+					}
+				})
+				.then(response => {
+						console.log("del() response: ", response.data.status)
+						this.lecturers.splice(index, 1)
+						alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
+					}
+				)
+				.catch(error => {
+					console.log("del() error caught: ", error)
+					alert(`Lecturer ${lecturer.name} failed to be deleted.`)
+					}
+				)
+			}
 		},
 		add(){
 			this.$router.push({ name: 'Add Lecturer' })
@@ -264,7 +325,7 @@ export default {
 		nameProcessor(name){
 			// RegEx which reads "select everything until you find a period followed by a space, including the period and space"
 			let realName = name.replace(/(.*)\. /, '')
-			console.log(`nameProcessor(${name}) => ${realName}`)
+			// console.log(`nameProcessor(${name}) => ${realName}`)
 			// this.genderCheck(realName)
 			return realName
 		},
