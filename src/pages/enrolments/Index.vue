@@ -58,7 +58,7 @@
 						>
 						<v-card>
 							<v-card-title>
-							<h4>{{ item.course.title }}</h4>
+							<router-link :to="{name: 'Enrolment Viewer', params: {id: item.id}}">{{ item.course.title }}</router-link>
 							<hr>
 							<small>{{ item.lecturer.name }}</small>
 							</v-card-title>

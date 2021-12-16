@@ -23,10 +23,10 @@
 				outlined
 				color="secondary"
 				>
-					<v-img
-					:src="`https://via.placeholder.com/600x200/000/999/?text=${course.title}`"
-					height="200px"
-					></v-img>
+					<router-link :to="{name: 'Course Viewer', params: {id: course.id}}"><v-card-title>{{ course.title }}</v-card-title></router-link>
+					<v-card-text>Code: {{course.code}}</v-card-text>
+					<v-card-text>Level: {{course.level}}</v-card-text>
+					<v-card-text>Points: {{course.points}}</v-card-text>
 					<v-item-group class="d-flex justify-space-between btnGroup pa-2">
 						<v-btn class="v-btn--outlined viewBtn" @click="view(course)">View</v-btn>
 						<v-btn class="v-btn--outlined editBtn" @click="edit(course)">Edit</v-btn>

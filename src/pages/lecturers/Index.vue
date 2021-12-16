@@ -50,15 +50,15 @@
 						xl="2"
 						>
 						<v-card>
+							<v-avatar class="float-right">
 							<v-img 
-								:src="`https://avatars.dicebear.com/api/${item.gender}/${item.realName}.svg`"
+								:src="`https://avatars.dicebear.com/api/initials/${item.realName}.svg`"
 								height="3em"
 								width="3em"
-								class="float-right"
 							></v-img>
-							
+							</v-avatar>
 							<v-card-title>
-								<h4>{{ item.name }}</h4>
+								<router-link :to="{name: 'Lecturer Viewer', params: {id: item.id}}">{{ item.name }}</router-link>
 							</v-card-title>
 							<v-switch
 								:input-value="isExpanded(item)"
@@ -197,6 +197,10 @@ export default {
 				lecturers.forEach((lecturer, index) => {
 					console.log(index, ": ", lecturer.name)
 					lecturer.realName = this.nameProcessor(lecturer.name)
+					// let nameSplit = lecturer.realName.split(' ')
+					// let firstName = nameSplit[0]
+					// lecturer.gender = this.genderCheck(firstName)
+					
 					// Hardcoding a gender while rate-limited 
 					if(toggle){
 						lecturer.gender = "female"
@@ -326,17 +330,14 @@ export default {
 			return realName
 		},
 		genderCheck(name){
-			let nameSplit = name.split(' ')
-			let firstName = nameSplit[0]
-			let gender = axios
-			.get(`https://api.genderize.io?name=${firstName}`)
+			return axios
+			.get(`https://api.genderize.io?name=${name}`)
 			.then(response => {
-					console.log(`genderCheck(${firstName}) response: ${response.data.gender}`)
+					console.log(`genderCheck(${name}) response: ${response.data.gender}`)
 					response.data.gender
 				}
 			)
 			.catch(error => console.log("genderCheck() error caught: ", error))
-			return gender
 		}
 	}
 };
