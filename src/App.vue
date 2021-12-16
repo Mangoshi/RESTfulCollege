@@ -78,6 +78,9 @@
 			<!-- Footer -->
 			<MyFooter />
 
+			<!-- Toast -->
+			<MyToast ref="toast"/>
+
 		</v-app>
 	</div>
 </template>
@@ -85,6 +88,7 @@
 <script>
 import MyFooter from "@/components/MyFooter.vue"
 import { mapState } from 'vuex'
+import MyToast from './components/MyToast.vue';
 
 
 export default {
@@ -94,6 +98,10 @@ export default {
 	}),
 	components: {
 		MyFooter,
+		MyToast,
+	},
+	mounted(){
+		this.$root.toast = this.$refs.toast
 	},
 	created(){
 		if (localStorage.getItem('token')){

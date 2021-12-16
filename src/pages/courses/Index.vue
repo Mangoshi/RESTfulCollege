@@ -171,18 +171,18 @@ export default {
 					.then(response => {
 							console.log("del() [course] response: ", response.data.status)
 							outerScope.courses.splice(index, 1)
-							alert(`Course ${course.title} & all associated enrolments have been deleted successfully!`)
+							outerScope.toastAlert( `Course ${course.title} & all associated enrolments have been deleted successfully!`, 'success')
 						}
 					)
 					.catch(error => {
 						console.log("del() [course] error caught: ", error)
-						alert(`Course ${course.title} failed to be deleted.`)
+						outerScope.toastAlert(`Course ${course.title} failed to be deleted.`, 'error')
 						}
 					)
 				})
 				.catch(error => {
 					console.log("del() [course enrolments] error caught: ", error)
-					alert(`Course ${course.title} failed to be deleted.`)
+					this.toastAlert(`Course ${course.title} failed to be deleted.`, 'error')
 				})
 			} else {
 				console.log("del() wo/enrolments started")
@@ -196,18 +196,22 @@ export default {
 				.then(response => {
 						console.log("del() response: ", response.data.status)
 						this.courses.splice(index, 1)
-						alert(`Course ${course.title} has been deleted successfully!`)
+						this.toastAlert(`Course ${course.title} has been deleted successfully!`, 'success')
 					}
 				)
 				.catch(error => {
 					console.log("del() error caught: ", error)
-					alert(`Course ${course.title} failed to be deleted.`)
+					this.toastAlert(`Course ${course.title} failed to be deleted.`, 'error')
 					}
 				)
 			}
 		},
 		add(){
 			this.$router.push({ name: 'Add Course' })
+		},
+		toastAlert(m, c){
+			this.$root.toast.show({message: m, color: c})
+			alert(m)
 		}
 	}
 }

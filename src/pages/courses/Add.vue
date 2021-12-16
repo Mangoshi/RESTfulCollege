@@ -96,10 +96,16 @@ export default {
 					}
 				})
 				.then(response => {
-					console.log("submitForm() response: ", response.data.data)
-					this.$router.push({
-						name: "All Courses"
-					})
+					console.log("submitForm() response: ", response.data)
+					this.$root.toast.show({message: response.data.status})
+					this.$router.push(
+						{ name: "All Courses"},
+						// () => {
+						// 	console.log(response.data.status)
+						// 	alert(response.data.status)
+						// 	this.$root.toast.show({ message: "Submit: " + response.data.status })
+						// 	}
+					)
 				})
 				.catch(error => {
 					console.log("submitForm() error message: ", error.response.data.message)
