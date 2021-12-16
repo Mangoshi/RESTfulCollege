@@ -115,10 +115,14 @@
 					</v-col>
 				</v-row>
 				<v-row justify="center" v-if="dialog">
-					<v-dialog v-model="dialog" persistent max-width="290">
-						<v-card>
-							<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
-							<v-card-text>This will permanently delete the {{ clickedEnrolment.course.title }} // {{ clickedEnrolment.lecturer.name }}  enrolment from the API...</v-card-text>
+					<v-dialog v-model="dialog" persistent max-width="800">
+						<v-card class="unselectable pa-3">
+							<v-card-title class="text-h5 mb-2 justify-center">Are you sure? &#128556;</v-card-title>
+							<v-card-text class="text-center">This will permanently delete the</v-card-text>
+							<v-card-text class="text-center"><b>{{ clickedEnrolment.course.title }}</b></v-card-text>
+							<v-card-text class="text-center text-h5">&#8597;</v-card-text>
+							<v-card-text class="text-center"><b>{{ clickedEnrolment.lecturer.name }}</b></v-card-text>
+							<v-card-text class="text-center">enrolment from the API...</v-card-text>
 							<v-card-actions>
 								<v-spacer></v-spacer>
 								<v-btn color="green darken-1" text @click="dialog = false">

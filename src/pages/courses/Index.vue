@@ -35,11 +35,18 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-row justify="center">
-			<v-dialog v-model="dialog" persistent max-width="290">
-				<v-card>
-					<v-card-title class="text-h5">Are you sure? &#128556;</v-card-title>
-					<v-card-text>This will permanently delete the {{ clickedCourse.title }} course from the API...</v-card-text>
+		<v-row justify="center" v-if="dialog">
+			<v-dialog v-model="dialog" persistent max-width="500">
+				<v-card class="unselectable pa-3">
+					<v-card-title class="text-h5 justify-center">Are you sure? &#128556;</v-card-title>
+					<div v-if="hasEnrolments">
+					<v-card-text class="text-center"><span class="text-h4">&#9888;</span></v-card-text>
+					<v-card-text class="text-center"><b>This course has enrolments!</b></v-card-text>
+					<v-card-text class="text-center">This will <i>permanently</i> delete the <b>{{ clickedCourse.title }}</b> course and <b>all enrolments associated with it</b> from the API...</v-card-text>
+					</div>
+					<div v-else>
+					<v-card-text class="text-center">This will <i>permanently</i> delete the <b>{{ clickedCourse.title }}</b> course from the API...</v-card-text>
+					</div>
 					<v-card-actions>
 						<v-spacer></v-spacer>
 						<v-btn color="green darken-1" text @click="dialog = false">
@@ -52,11 +59,11 @@
 				</v-card>
 			</v-dialog>
 		</v-row>
-	</v-container>
+</v-container>
 </template>
 
 <script>
-import axios from '@/config/college.js'
+import axios from 'axios'
 
 export default {
 	name: "CoursesIndex",
@@ -69,7 +76,8 @@ export default {
 			// Delete pop-up variables
 			dialog: false,
 			clickedCourse: {},
-			clickedIndex: null
+			clickedIndex: null,
+			hasEnrolments: false
 		}
 	},
 	computed:{
@@ -87,8 +95,9 @@ export default {
 	methods: {
 		getData(){
 			let token = localStorage.getItem('token')
+			let baseURL = 'https://college-api-mo.herokuapp.com/api/'
 			axios
-			.get(`courses`,
+			.get(`${baseURL}courses`,
 			{
 				headers: {
 					"Authorization" : `Bearer ${token}`
@@ -124,20 +133,68 @@ export default {
 			this.clickedCourse = course
 			// Assign clickedIndex to the value of the clicked course's index in array
 			this.clickedIndex = index
+
+			console.log("delDialog(course):", course)
+			console.log("delDialog(index):", index)
+
+
+		if(course.enrolments.length !== 0){
+				console.log("delDialog() hasEnrolments=true:", course.enrolments)
+				this.hasEnrolments = true
+			} else {
+				console.log("delDialog() hasEnrolments=false:", course.enrolments)
+				this.hasEnrolments = false
+			}
 		},
 		del(course, index){
+			var outerScope = this
 			console.log("del() Course data: ", course)
 			console.log("del() Index data: ", index)
 			let token = localStorage.getItem('token')
+			let baseURL = 'https://college-api-mo.herokuapp.com/api/'
+			if(course.enrolments.length !== 0){
+				console.log("del() w/enrolments started")
+				let listOfDeleteRequests = course.enrolments.map((enrolment) => axios.delete(`${baseURL}enrolments/${enrolment.id}`, 
+					{ headers: { Authorization: `Bearer ${token}` }}
+				));
+				console.log("listOfDeleteRequests:",listOfDeleteRequests)
 				axios
-				.delete(`courses/${course.id}`,
+				.all(listOfDeleteRequests)
+				.then( function() {
+					axios
+					.delete(`${baseURL}courses/${course.id}`,
+					{
+						headers: {
+							"Authorization" : `Bearer ${token}`
+						}
+					})
+					.then(response => {
+							console.log("del() [course] response: ", response.data.status)
+							outerScope.courses.splice(index, 1)
+							alert(`Course ${course.title} & all associated enrolments have been deleted successfully!`)
+						}
+					)
+					.catch(error => {
+						console.log("del() [course] error caught: ", error)
+						alert(`Course ${course.title} failed to be deleted.`)
+						}
+					)
+				})
+				.catch(error => {
+					console.log("del() [course enrolments] error caught: ", error)
+					alert(`Course ${course.title} failed to be deleted.`)
+				})
+			} else {
+				console.log("del() wo/enrolments started")
+				axios
+				.delete(`${baseURL}courses/${course.id}`,
 				{
 					headers: {
 						"Authorization" : `Bearer ${token}`
 					}
 				})
 				.then(response => {
-						console.log("del() response: ", response.data.data)
+						console.log("del() response: ", response.data.status)
 						this.courses.splice(index, 1)
 						alert(`Course ${course.title} has been deleted successfully!`)
 					}
@@ -147,7 +204,8 @@ export default {
 					alert(`Course ${course.title} failed to be deleted.`)
 					}
 				)
-			},
+			}
+		},
 		add(){
 			this.$router.push({ name: 'Add Course' })
 		}

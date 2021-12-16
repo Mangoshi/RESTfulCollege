@@ -108,7 +108,7 @@
 				</v-row>
 				<v-row justify="center" v-if="dialog">
 					<v-dialog v-model="dialog" persistent max-width="500">
-						<v-card class="unselectable">
+						<v-card class="unselectable pa-3">
 							<v-card-title class="text-h5 justify-center">Are you sure? &#128556;</v-card-title>
 							<div v-if="hasEnrolments">
 							<v-card-text class="text-center"><span class="text-h4">&#9888;</span></v-card-text>
@@ -259,10 +259,6 @@ export default {
 				console.log("listOfDeleteRequests:",listOfDeleteRequests)
 				axios
 				.all(listOfDeleteRequests)
-				// .then(response => {
-				// 	console.log("del() [lecturer enrolments] response: ", response.data.status)
-				// 	console.log("Lecturer's enrolments have been deleted successfully!")
-				// })
 				.then( function() {
 					axios
 					.delete(`${baseURL}lecturers/${lecturer.id}`,
@@ -272,9 +268,9 @@ export default {
 						}
 					})
 					.then(response => {
-							console.log("del() [lecturer] response: ", response.data)
+							console.log("del() [lecturer] response: ", response.data.status)
 							outerScope.lecturers.splice(index, 1)
-							alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
+							alert(`Lecturer ${lecturer.name} & all their enrolments have been deleted successfully!`)
 						}
 					)
 					.catch(error => {
@@ -298,7 +294,7 @@ export default {
 				})
 				.then(response => {
 						console.log("del() response: ", response.data.status)
-						this.lecturers.splice(index, 1)
+						outerScope.lecturers.splice(index, 1)
 						alert(`Lecturer ${lecturer.name} has been deleted successfully!`)
 					}
 				)
