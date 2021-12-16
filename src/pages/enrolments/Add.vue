@@ -2,24 +2,25 @@
 	<v-container>
 			<v-row class="mt-10">
 				<v-col cols="12" md="6">
-					<v-select
+					<v-autocomplete
 						:items="courses"
 						item-text="title"
 						item-value="id"
 						v-model="form.course_id"
 						color="accent"
-						label="Course"/>
+						label="Course"
+						/>
 						<small v-if="errors.course_id" class="unselectable accent--text">{{errors.course_id[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
-					<v-select
+					<v-autocomplete
 						:items="lecturers"
 						item-text="name"
 						item-value="id"
 						v-model="form.lecturer_id"
 						color="accent"
 						label="Lecturer"
-					></v-select>
+						/>
 					<small v-if="errors.lecturer_id" class="unselectable accent--text">{{errors.lecturer_id[0]}}</small>
 				</v-col>
 				<v-col cols="12" md="6">
